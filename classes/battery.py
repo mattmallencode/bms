@@ -1,6 +1,6 @@
 # Class representing the state of a battery of a phone.
 class Battery:
-    def __init__(self, is_charging: bool, current: float, voltage: float, drain: float, temperature: float, lifespan: int, voltage_norm: float, voltage_min: float, voltage_max: float,  charge_c: float, discharge_c: float, thermal_runaway: float, is_alive: bool, charge_status: float) -> None:
+    def __init__(self, is_charging: bool, current: float, voltage: float, drain: float, temperature: float, lifespan: int, voltage_norm: float, voltage_min: float, voltage_max: float,  charge_c: float, discharge_c: float, thermal_runaway: float, is_alive: bool, charge_status: float, capacity: float) -> None:
         """
         Initializes an instance of the Battery class based on the arguments you pass to this constructor.
 
@@ -19,6 +19,7 @@ class Battery:
         thermal_runaway -- the temperature at which the battery will keep increasing in temperature and go on fire.
         is_alive -- the battery's status, either dead or alive.
         charge_status -- how much the battery is currently charged.
+        capacity -- the capacity of the battery.
         """
         # Initialize instance variables based on arguments passed to the constructor.
         self._is_charging = is_charging
@@ -35,6 +36,7 @@ class Battery:
         self._thermal_runaway = thermal_runaway
         self._is_alive = is_alive
         self._charge_status = charge_status
+        self._capacity = capacity
 
     def _get_is_charging(self) -> bool:
         """Returns whether the battery is charging or not."""
@@ -147,6 +149,15 @@ class Battery:
     def _set_charge_status(self, charge_status) -> None:
         """Updates how much the battery is charged.."""
         self._charge_status = charge_status
+    
+    def _get_capacity(self) -> float:
+        """Returns the capacity of the battery.."""
+        return self._capacity
+
+    def _set_capacity(self, capacity) -> None:
+        """Updates the capacity of the battery."""
+        self._capacity = capacity
+
     # Assign all of the getters of setters to class properties.
     # This means private instance variables can be accessed "directly" by using the getters and setters as an interface.
     # E.g. my_battery.is_charging = False calls _set_is_charging(False) under the hood.
@@ -164,3 +175,4 @@ class Battery:
     thermal_runaway = property(_get_thermal_runaway, _set_thermal_runaway)
     is_alive = property(_get_is_alive, _set_is_alive)
     charge_status = property(_get_charge_status, _set_charge_status)
+    capacity = property(_get_capacity, _set_capacity)
