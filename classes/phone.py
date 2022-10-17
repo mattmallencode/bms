@@ -1,3 +1,5 @@
+import tkinter
+
 # Class representing the state of a phone.
 class Phone:
     def __init__(self, powered_on: bool, display_on: bool, locked: bool) -> None:
@@ -13,6 +15,50 @@ class Phone:
         self._powered_on = powered_on
         self._display_on = display_on
         self._locked = locked
+
+        self._root = tkinter.Tk()
+        self._root.title("Phone")
+
+        self._size = {"x":300, "y":550}
+        self._radius = 50
+        self._top_corner = {"x":5, "y":5}
+        self._bar = {"x":100, "y":20}
+        self._button_radius = 50
+
+        # phone body
+        self.Canvas = tkinter.Canvas(self._root, bg="white", width=self._size["x"], height=self._size["y"])
+        self.Canvas.create_rectangle(self._radius, self._top_corner["y"], self._size["x"]-self._radius, self._size["y"], fill="black", outline="black")
+        self.Canvas.create_rectangle(self._top_corner["x"], self._radius, self._size["x"], self._size["y"]-self._radius, fill="black", outline="black")
+        self.Canvas.create_oval(self._top_corner["x"], self._top_corner["y"], (self._radius*2), (self._radius*2), fill="black", outline="black")
+        self.Canvas.create_oval((self._size["x"]-(self._radius*2)), self._top_corner["y"], self._size["x"], (self._radius*2), fill="black", outline="black")
+        self.Canvas.create_oval(self._top_corner["x"], (self._size["y"]-(self._radius*2)), (self._radius*2), self._size["y"], fill="black", outline="black")
+        self.Canvas.create_oval((self._size["x"]-(self._radius*2)), (self._size["y"]-(self._radius*2)), self._size["x"], self._size["y"], fill="black", outline="black") 
+
+        # screen
+        self.Canvas.create_rectangle((self._radius/5)+self._top_corner["x"], (self._radius*1.5)+self._top_corner["y"], (self._size["x"]-(self._radius/5)), (self._size["y"]-(self._radius*1.5)), fill="grey16", outline="black")
+
+        # top speaker
+        self.Canvas.create_rectangle(((self._size["x"]*0.5)-(self._bar["x"]*0.5))+self._top_corner["x"], ((self._size["y"]*0.08)-(self._bar["y"]*0.5))+self._top_corner["y"], ((self._size["x"]*0.5)+(self._bar["x"]*0.5)), ((self._size["y"]*0.08)+(self._bar["y"]*0.5)), fill="grey12", outline="black")
+
+        # bottom button
+        self.button = self.Canvas.create_oval(((self._size["x"]*0.5)-(self._button_radius*0.5))+self._top_corner["x"], ((self._size["y"]*0.925)-(self._button_radius*0.5))+self._top_corner["y"], ((self._size["x"]*0.5)+(self._button_radius*0.5)), ((self._size["y"]*0.925)+(self._button_radius*0.5)), fill="grey30", outline="black")
+        self.Canvas.create_rectangle(((self._size["x"]*0.5)-((self._button_radius/1.5)*0.5))+self._top_corner["x"], ((self._size["y"]*0.925)-((self._button_radius/1.5)*0.5))+self._top_corner["y"], ((self._size["x"]*0.5)+((self._button_radius/1.5)*0.5)), ((self._size["y"]*0.925)+((self._button_radius/1.5)*0.5)), outline="black")
+        self.Canvas.bind("<Button-1>", self._press)
+
+        self.Canvas.pack()
+        self._root.mainloop()
+
+    def _press(self, event):
+        """Handles button clicks ont he "screen" """
+        # home button
+        if ((((self._size["x"]*0.5)-(self._button_radius*0.5))+self._top_corner["x"]) < event.x) and ((((self._size["y"]*0.925)-(self._button_radius*0.5))+self._top_corner["y"]) < event.y) and (((self._size["x"]*0.5)+(self._button_radius*0.5)) > event.x) and (((self._size["y"]*0.925)+(self._button_radius*0.5)) > event.y):
+            self._set_display_on(True)
+            self.Canvas.create_rectangle((self._radius/5)+self._top_corner["x"], (self._radius*1.5)+self._top_corner["y"], (self._size["x"]-(self._radius/5)), (self._size["y"]-(self._radius*1.5)), fill="white", outline="black")
+            self.Canvas.create_text(self._size["x"]/2, self._size["y"]/2, fill="black", text="Phone is on\nthis is where inside\ndetails will go!")
+        elif self._get_display_on == True:
+            if ((self._radius/5)+self._top_corner["x"] < event.x) and ((self._radius*1.5)+self._top_corner["y"] < event.y) and ((self._size["x"]-(self._radius/5)) > event.x) and ((self._size["y"]-(self._radius*1.5)) > event.y):
+                print("pog")
+    
 
     def _get_powered_on(self) -> bool:
         """Returns whether the phone is powered on or not."""
@@ -43,3 +89,7 @@ class Phone:
     powered_on = property(_get_powered_on, _set_powered_on)
     display_on = property(_get_display_on, _set_display_on)
     locked = property(_get_locked, _set_locked)
+
+
+if __name__ == "__main__":
+    Phone(True, False, False)
