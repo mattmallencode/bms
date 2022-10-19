@@ -1,7 +1,5 @@
 # Importing Type so that we can type hint custom classes.
 from typing import Type
-# Importing Battery from our classes.
-from classes.battery import Battery
 
 def decide_charge_mode(current: float, voltage: float,  voltage_max: float, voltage_min: float, volatage_norm: float, temperture: float, charge_status: float, charge_c: float) -> float:
     ''' 
@@ -29,7 +27,4 @@ def discharge(drain: float, discharge_c: float, thermal_runaway: float, charge_s
 
     The discharge function is in the charging file as they both affect each other.
     '''
-    pass
-
-def constant_current(battery: Type[Battery]):
     pass
