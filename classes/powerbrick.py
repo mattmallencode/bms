@@ -1,5 +1,5 @@
-# Class representing the state of a phone charger.
-class Charger:
+# Class representing the state of a phone power brick.
+class PowerBrick:
     def __init__(self, CURRENT: float, VOLTAGE: float, ) -> None:
         """
         Initializes an instance of the Charger class based on the arguments you pass to this constructor.
