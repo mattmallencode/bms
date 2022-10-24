@@ -1,3 +1,6 @@
+# Estimate of how many full charge and discharge cycles the battery can handle before it begins to lose functional capacity.
+LIFESPAN: int
+
 def lifespan(temperture: float, temperture_norm: float, voltage: float, current: float, discharge_c: float, thermal_runaway: float) -> int:
     ''' 
     The degradation of the lifespan of the battery is affected by multiple factors.

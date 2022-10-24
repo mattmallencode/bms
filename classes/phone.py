@@ -2,7 +2,7 @@ import tkinter
 
 # Class representing the state of a phone.
 class Phone:
-    def __init__(self, powered_on: bool, display_on: bool, locked: bool) -> None:
+    def __init__(self, powered_on: bool, display_on: bool, locked: bool, is_charging: bool) -> None:
         """
         Initializes an instance of the Phone class based on the arguments you pass to this constructor.
 
@@ -12,9 +12,11 @@ class Phone:
         locked -- bool indicating whether the phone is currently locked.
         """
         # Initialize instance variables based on arguments passed to the constructor.
+        self._is_charging = is_charging
         self._powered_on = powered_on
         self._display_on = display_on
         self._locked = locked
+        self._is_charging = is_charging
 
         self._root = tkinter.Tk()
         self._root.title("Phone")
@@ -47,6 +49,14 @@ class Phone:
 
         self.Canvas.pack()
         self._root.mainloop()
+    
+    def _get_is_charging(self) -> bool:
+        """Returns whether the battery is charging or not."""
+        return self._is_charging
+
+    def _set_is_charging(self, is_charging) -> None:
+        """Updates the charging status of the battery."""
+        self._is_charging = is_charging
 
     def _press(self, event):
         """Handles button clicks ont he "screen" """
