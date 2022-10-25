@@ -26,26 +26,26 @@ class Phone:
         self._button_radius = 50
 
         # phone body
-        self.Canvas = tkinter.Canvas(self._root, bg="white", width=self._size["x"], height=self._size["y"])
-        self.Canvas.create_rectangle(self._radius, self._top_corner["y"], self._size["x"]-self._radius, self._size["y"], fill="black", outline="black")
-        self.Canvas.create_rectangle(self._top_corner["x"], self._radius, self._size["x"], self._size["y"]-self._radius, fill="black", outline="black")
-        self.Canvas.create_oval(self._top_corner["x"], self._top_corner["y"], (self._radius*2), (self._radius*2), fill="black", outline="black")
-        self.Canvas.create_oval((self._size["x"]-(self._radius*2)), self._top_corner["y"], self._size["x"], (self._radius*2), fill="black", outline="black")
-        self.Canvas.create_oval(self._top_corner["x"], (self._size["y"]-(self._radius*2)), (self._radius*2), self._size["y"], fill="black", outline="black")
-        self.Canvas.create_oval((self._size["x"]-(self._radius*2)), (self._size["y"]-(self._radius*2)), self._size["x"], self._size["y"], fill="black", outline="black") 
+        self._canvas = tkinter.Canvas(self._root, bg="white", width=self._size["x"], height=self._size["y"])
+        self._canvas.create_rectangle(self._radius, self._top_corner["y"], self._size["x"]-self._radius, self._size["y"], fill="black", outline="black")
+        self._canvas.create_rectangle(self._top_corner["x"], self._radius, self._size["x"], self._size["y"]-self._radius, fill="black", outline="black")
+        self._canvas.create_oval(self._top_corner["x"], self._top_corner["y"], (self._radius*2), (self._radius*2), fill="black", outline="black")
+        self._canvas.create_oval((self._size["x"]-(self._radius*2)), self._top_corner["y"], self._size["x"], (self._radius*2), fill="black", outline="black")
+        self._canvas.create_oval(self._top_corner["x"], (self._size["y"]-(self._radius*2)), (self._radius*2), self._size["y"], fill="black", outline="black")
+        self._canvas.create_oval((self._size["x"]-(self._radius*2)), (self._size["y"]-(self._radius*2)), self._size["x"], self._size["y"], fill="black", outline="black") 
 
         # screen
-        self.Canvas.create_rectangle((self._radius/5)+self._top_corner["x"], (self._radius*1.5)+self._top_corner["y"], (self._size["x"]-(self._radius/5)), (self._size["y"]-(self._radius*1.5)), fill="grey16", outline="black")
+        self._canvas.create_rectangle((self._radius/5)+self._top_corner["x"], (self._radius*1.5)+self._top_corner["y"], (self._size["x"]-(self._radius/5)), (self._size["y"]-(self._radius*1.5)), fill="grey16", outline="black")
 
         # top speaker
-        self.Canvas.create_rectangle(((self._size["x"]*0.5)-(self._bar["x"]*0.5))+self._top_corner["x"], ((self._size["y"]*0.08)-(self._bar["y"]*0.5))+self._top_corner["y"], ((self._size["x"]*0.5)+(self._bar["x"]*0.5)), ((self._size["y"]*0.08)+(self._bar["y"]*0.5)), fill="grey12", outline="black")
+        self._canvas.create_rectangle(((self._size["x"]*0.5)-(self._bar["x"]*0.5))+self._top_corner["x"], ((self._size["y"]*0.08)-(self._bar["y"]*0.5))+self._top_corner["y"], ((self._size["x"]*0.5)+(self._bar["x"]*0.5)), ((self._size["y"]*0.08)+(self._bar["y"]*0.5)), fill="grey12", outline="black")
 
         # bottom button
-        self.button = self.Canvas.create_oval(((self._size["x"]*0.5)-(self._button_radius*0.5))+self._top_corner["x"], ((self._size["y"]*0.925)-(self._button_radius*0.5))+self._top_corner["y"], ((self._size["x"]*0.5)+(self._button_radius*0.5)), ((self._size["y"]*0.925)+(self._button_radius*0.5)), fill="grey30", outline="black")
-        self.Canvas.create_rectangle(((self._size["x"]*0.5)-((self._button_radius/1.5)*0.5))+self._top_corner["x"], ((self._size["y"]*0.925)-((self._button_radius/1.5)*0.5))+self._top_corner["y"], ((self._size["x"]*0.5)+((self._button_radius/1.5)*0.5)), ((self._size["y"]*0.925)+((self._button_radius/1.5)*0.5)), outline="black")
-        self.Canvas.bind("<Button-1>", self._press)
+        self.button = self._canvas.create_oval(((self._size["x"]*0.5)-(self._button_radius*0.5))+self._top_corner["x"], ((self._size["y"]*0.925)-(self._button_radius*0.5))+self._top_corner["y"], ((self._size["x"]*0.5)+(self._button_radius*0.5)), ((self._size["y"]*0.925)+(self._button_radius*0.5)), fill="grey30", outline="black")
+        self._canvas.create_rectangle(((self._size["x"]*0.5)-((self._button_radius/1.5)*0.5))+self._top_corner["x"], ((self._size["y"]*0.925)-((self._button_radius/1.5)*0.5))+self._top_corner["y"], ((self._size["x"]*0.5)+((self._button_radius/1.5)*0.5)), ((self._size["y"]*0.925)+((self._button_radius/1.5)*0.5)), outline="black")
+        self._canvas.bind("<Button-1>", self._press)
 
-        self.Canvas.pack()
+        self._canvas.pack()
         self._root.mainloop()
 
     def _press(self, event):
@@ -53,8 +53,8 @@ class Phone:
         # home button
         if ((((self._size["x"]*0.5)-(self._button_radius*0.5))+self._top_corner["x"]) < event.x) and ((((self._size["y"]*0.925)-(self._button_radius*0.5))+self._top_corner["y"]) < event.y) and (((self._size["x"]*0.5)+(self._button_radius*0.5)) > event.x) and (((self._size["y"]*0.925)+(self._button_radius*0.5)) > event.y):
             self._set_display_on(True)
-            self.Canvas.create_rectangle((self._radius/5)+self._top_corner["x"], (self._radius*1.5)+self._top_corner["y"], (self._size["x"]-(self._radius/5)), (self._size["y"]-(self._radius*1.5)), fill="white", outline="black")
-            self.Canvas.create_text(self._size["x"]/2, self._size["y"]/2, fill="black", text="Phone is on\nthis is where inside\ndetails will go!")
+            self._canvas.create_rectangle((self._radius/5)+self._top_corner["x"], (self._radius*1.5)+self._top_corner["y"], (self._size["x"]-(self._radius/5)), (self._size["y"]-(self._radius*1.5)), fill="white", outline="black")
+            self._canvas.create_text(self._size["x"]/2, self._size["y"]/2, fill="black", text="Phone is on\nthis is where inside\ndetails will go!")
         elif self._get_display_on == True:
             if ((self._radius/5)+self._top_corner["x"] < event.x) and ((self._radius*1.5)+self._top_corner["y"] < event.y) and ((self._size["x"]-(self._radius/5)) > event.x) and ((self._size["y"]-(self._radius*1.5)) > event.y):
                 print("pog")
