@@ -2,7 +2,7 @@ from typing import Type
 from classes.battery import Battery
 
 class Charger:
-    def __init__():
+    def __init__() -> None:
         pass
 
     def _get_battery(battery: Type[Battery]):
