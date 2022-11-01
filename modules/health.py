@@ -1,7 +1,9 @@
 # Estimate of how many full charge and discharge cycles the battery can handle before it begins to lose functional capacity.
 LIFESPAN: int
+# Importing the Charger class from the charger.py folder
+from classes.charger import Charger
 
-def lifespan(temperture: float, temperture_norm: float, voltage: float, current: float, discharge_c: float, thermal_runaway: float) -> int:
+def lifespan(charger: type[Charger], discharge_c: float, thermal_runaway: float, temperture_norm: float) -> int:
     ''' 
     The degradation of the lifespan of the battery is affected by multiple factors.
     These include:

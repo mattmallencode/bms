@@ -1,5 +1,7 @@
 # Importing Type so that we can type hint custom classes.
 from typing import Type
+# Importing the Charger class from the charger.py folder
+from classes.charger import Charger
 # The optimum voltage for this battery, should be trended towards to minimize battery degradation.
 VOLTAGE_NORM: float
 # At this voltage the battery is dead, trending towards this voltage indicates a lower capacity.
@@ -20,7 +22,7 @@ CHARGE_STATUS: float
 CAPACITY: float
 
 
-def decide_charge_mode(current: float, voltage: float,  voltage_max: float, voltage_min: float, volatage_norm: float, temperture: float, charge_status: float, charge_c: float) -> float:
+def decide_charge_mode(charger: Type[Charger], charge_status: float, charge_c: float, voltage_max: float, voltage_min: float) -> float:
     ''' 
     A battery can charge under specific conditions: these being curren voltage, current in  and temperture.
     The function will take into account the current volatage and current
