@@ -4,6 +4,8 @@ from typing import Type
 from classes.charger import Charger
 # Importing the Phone class
 from classes.phone import Phone
+
+from classes.battery import Battery
 # The optimum voltage for this battery, should be trended towards to minimize battery degradation.
 VOLTAGE_NORM: float
 # At this voltage the battery is dead, trending towards this voltage indicates a lower capacity.
@@ -69,10 +71,11 @@ def decide_charge_mode(charger: Type[Charger]) -> None:
             charger.charging_mode = "constant_voltage"
 
 
-def discharge(phone: Type[Phone]) -> float:
+def discharge(battery: Type[Battery], phone: Type[Phone], time_passed: float) -> float:
     '''
     Function to draw charge from the battery based on the power draw of the phone (GUI).
 
     phone -- the phone the BMS is managing the battery of.
     '''
-    pass
+    # Discharge the battery by the power draw times the time_passed.
+    battery.voltage -= phone.power_draw * time_passed
