@@ -2,6 +2,8 @@
 from typing import Type
 # Importing the Charger class from the charger.py folder
 from classes.charger import Charger
+# Importing the Battery class from the battery.py folder
+from classes.battery import Battery
 # The optimum voltage for this battery, should be trended towards to minimize battery degradation.
 VOLTAGE_NORM: float
 # At this voltage the battery is dead, trending towards this voltage indicates a lower capacity.
@@ -20,7 +22,8 @@ BATTERY_ALIVE: bool
 CHARGE_STATUS: float
 # The capacity of the battery.
 CAPACITY: float
-
+# The threshold of the current when battery is fully charged
+THRESHOLD: float
 
 def decide_charge_mode(charger: Type[Charger], charge_status: float, charge_c: float, voltage_max: float, voltage_min: float) -> float:
     ''' 
@@ -32,7 +35,21 @@ def decide_charge_mode(charger: Type[Charger], charge_status: float, charge_c: f
     And the current charge status of the battery ie. how full or empty the battery is.
     We pass the current charge rate in as it may change depending on our systems state and demands. 
     '''
-    pass
+    setting = None
+    battery = charger.battery
+    if battery.voltage < VOLTAGE_MIN:
+        setting = "trickle"    
+    else:
+        if battery.voltage < VOLTAGE_MAX:
+            setting = "constant_current"
+        elif battery.voltage >= VOLTAGE_MAX:
+            setting = "constant_voltage"
+            if battery.current <= THRESHOLD:
+                setting = "trickle" 
+    # charger setting is only properly set here to prevent any bugs
+    # in case of the inner if statement when suddenly switching to 
+    # constant voltage and then to trickle charge 
+    charger.charge_setting = setting
 
 
 def discharge(drain: float, discharge_c: float, thermal_runaway: float, charge_status: float) -> float:
