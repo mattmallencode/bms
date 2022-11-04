@@ -1,24 +1,20 @@
 from typing import Type
 from classes.battery import Battery
+from classes.powerbrick import PowerBrick
+from classes.phone import Phone
 
 class Charger:
-    def __init__(self, battery: Type[Battery], charging_mode: str) -> None:
+    def __init__(self, battery: Type[Battery], powerbrick:Type[PowerBrick]):
         self._battery = battery
-        self._charging_mode = charging_mode
+        self._powerbrick = powerbrick
+        self._charge_setting = None
+        
+    def _get_charge_setting(self):
+        return self._charge_setting
 
-    def _get_battery(self) -> Type[Battery]:
-        return self._battery
-    
-    def _get_charging_mode(self) -> str:
-        return self._charging_mode
-    
-    def _set_charging_mode(self, charging_mode: str) -> None:
-        self._charging_mode = charging_mode
-    
-    battery = property(_get_battery)
+    def _set_charge_setting(self, setting):
+        self._charge_setting = setting
 
-    charging_mode = property(_get_charging_mode, _set_charging_mode)
-    
     def report_temperature(self) -> float:
         return self.battery.temperature
     
@@ -30,3 +26,5 @@ class Charger:
     
     def report_resistance(self) -> float:
         return self.battery.resistance
+        
+    charge_setting = property(_get_charge_setting, _set_charge_setting)
