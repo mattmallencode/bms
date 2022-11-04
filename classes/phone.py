@@ -2,7 +2,7 @@ import tkinter
 
 # Class representing the state of a phone.
 class Phone:
-    def __init__(self, powered_on: bool, display_on: bool, locked: bool, is_charging: bool) -> None:
+    def __init__(self, powered_on: bool, display_on: bool, locked: bool, is_charging: bool, power_draw: float) -> None:
         """
         Initializes an instance of the Phone class based on the arguments you pass to this constructor.
 
@@ -17,6 +17,7 @@ class Phone:
         self._display_on = display_on
         self._locked = locked
         self._is_charging = is_charging
+        self._power_draw = power_draw
 
         self._root = tkinter.Tk()
         self._root.title("Phone")
@@ -68,7 +69,6 @@ class Phone:
         elif self._get_display_on == True:
             if ((self._radius/5)+self._top_corner["x"] < event.x) and ((self._radius*1.5)+self._top_corner["y"] < event.y) and ((self._size["x"]-(self._radius/5)) > event.x) and ((self._size["y"]-(self._radius*1.5)) > event.y):
                 print("pog")
-    
 
     def _get_powered_on(self) -> bool:
         """Returns whether the phone is powered on or not."""
@@ -102,7 +102,14 @@ class Phone:
         """Updates whether the phone is charging or not."""
         self._is_charging = true_or_false
     
-
+    def _get_power_draw(self) -> float:
+        """Returns the power the phone is drawing."""
+        return self._power_draw
+    
+    def _set_power_draw(self, power_draw: float) -> None:
+        """Updates the phone's power draw."""
+        self._power_draw = power_draw
+        
     # Assign all of the getters to class properties. No setters as all of the class' attribtutes are constants.
     # This means private instance variables can be accessed "directly" by using the getters and setters as an interface.
     # E.g. my_phone.powered_on = False calls _set_powered_on(False) under the hood.
@@ -110,6 +117,7 @@ class Phone:
     display_on = property(_get_display_on, _set_display_on)
     locked = property(_get_locked, _set_locked)
     is_charging = property(_get_is_charging, _set_is_charging)
+    power_draw = property(_get_power_draw, _set_power_draw)
 
 if __name__ == "__main__":
     Phone(True, False, False)
