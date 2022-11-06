@@ -46,6 +46,7 @@ class Battery:
     def _set_resistance(self, resistance) -> None:
         """Updates the resistance of the battery."""
         self._resistance = resistance
+   
     
     # Assign all of the getters of setters to class properties.
     # This means private instance variables can be accessed "directly" by using the getters and setters as an interface.
