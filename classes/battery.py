@@ -55,3 +55,5 @@ class Battery:
     voltage = property(_get_voltage, _set_voltage)
     temperature = property(_get_temperature, _set_temperature)
     resistance = property(_get_resistance, _set_resistance)
+
+    
