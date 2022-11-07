@@ -1,6 +1,6 @@
 # Importing the charger function to access the charger setting.
 from classes.charger import Charger
-#import math
+# import math module 
 import math
 # import the charging file
 from modules import charging

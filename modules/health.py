@@ -16,7 +16,7 @@ def lifespan(charger: type[Charger], discharge_c: float, thermal_runaway: float,
 
     Charge left in the battery = TTE * SOC 
 
-    With each cycle I wil decrease the Total capacity by 0.5
+    With each cycle will decrease the Total capacity by 0.5
 
     A cycle = When enough charge has flowed from the powerbrick to equal the total capacity of the battery.
     '''
