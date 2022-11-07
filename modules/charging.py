@@ -2,12 +2,12 @@
 from typing import Type
 # Importing the Charger class
 from classes.charger import Charger
-
-# Importing the Battery class from the battery.py folder
 # Importing the Phone class
 from classes.phone import Phone
-
+# Importing the Battery class
 from classes.battery import Battery
+
+
 # The optimum voltage for this battery, should be trended towards to minimize battery degradation.
 VOLTAGE_NORM: float
 # At this voltage the battery is dead, trending towards this voltage indicates a lower capacity.
@@ -22,11 +22,10 @@ DISCHARGE_C: float
 THERMAL_RUNAWAY: float
 # The battery's status, either dead or alive.
 BATTERY_ALIVE: bool
-# The capacity of the battery.
+# The max capacity of the battery with no degradation
 CAPACITY: float
 # The threshold of the current when battery is fully charged
 THRESHOLD: float
-
 
 def decide_charge_mode(charger: Type[Charger]) -> None:
     '''
@@ -45,12 +44,10 @@ def decide_charge_mode(charger: Type[Charger]) -> None:
             setting = "constant_current"
         elif battery.voltage >= VOLTAGE_MAX:
             setting = "constant_voltage"
-            if battery.current <= THRESHOLD:
+            if battery.current >= THRESHOLD:
                 setting = "trickle" 
   
     charger.charge_setting = setting
-
-
 
 
 def discharge(battery: Type[Battery], phone: Type[Phone], time_passed: float) -> float:
