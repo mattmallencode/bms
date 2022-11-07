@@ -93,24 +93,24 @@ class Battery:
         # If the time is None it means this is the first time it has beeen called.
         if self._time == None:
             current_time = time.time()
-            self._set_time(current_time)
-            self._set_time_last_changed(current_time)
+            self.time = current_time
+            self.time_last_changed = current_time
         
         # If the charge setting is "trickle" alter the variables based on the trickle charge.
         if self._charger.charge_setting == "trickle":
             # Taking the amount of time has passed since the last charge state.
             # Assume it has been charging in trickle charge for that length of time.
             # Modify the variables accordingly 
-            time_in_trickle_charge = self._get_time() - self._get_time_last_changed()
+            time_in_trickle_charge = self.time - self.time_last_changed
             # apply the formulas to the varibles for the duration that they were affected
 
             # the voltage
             voltage_max = charging.VOLTAGE_MAX
             # Apply the voltage formula for trickle charge
-            voltage = (voltage_max / 1000) * time_in_trickle_charge
-            self._set_voltage(voltage)
+            new_voltage = (voltage_max / 1000) * time_in_trickle_charge
+            self.voltage = new_voltage
             # The current is 0 in trickle charge
-            self._set_current(0.0) 
+            self.current = 0.0 
             # Temperture
 
         # If the charge setting is "constant_current" alter the variables based on the constant current.
@@ -118,12 +118,12 @@ class Battery:
             # Taking the amount of time has passed since the last charge state.
             # Assume it has been charging with constant current for that length of time.
             # Modify the variables accordingly 
-            time_in_constant_current = self._get_time() - self._get_time_last_changed()
+            time_in_constant_current = self.time - self.time_last_changed
             # Apply the voltage formula for constant current
-            voltage = (1.0 / charging.CHARGE_C) * time_in_constant_current ** 2
-            self._set_voltage(voltage)
+            new_voltage = (1.0 / charging.CHARGE_C) * time_in_constant_current ** 2
+            self.voltage = new_voltage
             # Current
-            self._set_current(charging.CHARGE_C)
+            self.current = charging.CHARGE_C
             # Temperture
 
 
@@ -132,13 +132,13 @@ class Battery:
             # Taking the amount of time has passed since the last charge state.
             # Assume it has been charging with constant voltage for that length of time.
             # Modify the variables accordingly 
-            time_in_constant_voltage = self._get_time() - self._get_time_last_changed()
+            time_in_constant_voltage = self.time() - self.time_last_changed()
             # Apply the voltage formula for constant voltage
             # Voltage
-            self._set_voltage(charging.VOLTAGE_MAX)
+            self.voltage = charging.VOLTAGE_MAX
             # Current
             current = charging.CHARGE_C(math.cos(time_in_constant_voltage / charging.CHARGE_C) + charging.CHARGE_C)
-            self._set_current(current)
+            self.current = current
             # Temperture
 
         #Once the varibales have beeen changed 
