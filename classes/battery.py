@@ -123,7 +123,6 @@ class Battery:
             self.voltage = new_voltage
             # The current is 0 in trickle charge
             self.current = 0.0 
-            # Temperture
 
         # If the charge setting is "constant_current" alter the variables based on the constant current.
         elif self._charger.charge_setting == "constant_current":
@@ -136,7 +135,6 @@ class Battery:
             self.voltage = new_voltage
             # Current
             self.current = charging.CHARGE_C
-            # Temperture
 
 
         # If it is neither of those that means it is "constant_voltage" hence we alter the variable accordingly.
@@ -151,7 +149,6 @@ class Battery:
             # Current
             current = charging.CHARGE_C(math.cos(time_in_constant_voltage / charging.CHARGE_C) + charging.CHARGE_C)
             self.current = current
-            # Temperture
 
         #Once the varibales have beeen changed 
         self._time_last_changed = self._time
