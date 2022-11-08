@@ -5,6 +5,8 @@ from classes.powerbrick import PowerBrick
 import time
 # Import all from config.py
 import config as config
+# Import math
+import math
 
 class Charger:
     def __init__(self, battery: Type[Battery], powerbrick:Type[PowerBrick]):
@@ -90,6 +92,19 @@ class Charger:
             self.voltage = new_voltage
             # Current
             self.current = config.CHARGE_C
+
+        # If the charge setting is "constant_voltage" alter the variables based on the constant voltage.
+        else:
+            # Taking the amount of time has passed since the last charge state.
+            # Assume it has been charging with constant voltage for that length of time.
+            # Modify the variables accordingly 
+            time_in_constant_voltage = self.time() - self.time_last_changed()
+            # Apply the voltage formula for constant voltage
+            # Voltage
+            self.voltage = config.VOLTAGE_MAX
+            # Current
+            current = config.CHARGE_C(math.cos(time_in_constant_voltage / config.CHARGE_C) + config.CHARGE_C)
+            self.current = current
 
         
         
