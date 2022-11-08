@@ -18,7 +18,7 @@ class Battery:
         voltage -- the voltage of the battery.
         temperature -- the temperature of the battery.
         resistance -- the resistance of the battery.
-        charge_left - how much charge the battery holds at present. Measured in ampere hours (aH)
+        functional_capacity - how much charge the battery holds at present. Measured in ampere hours (aH)
         """
 
         # Initialize instance variables based on arguments passed to the constructor.
@@ -63,11 +63,11 @@ class Battery:
         """Updates the resistance of the battery."""
         self._resistance = resistance
 
-    def _get_charge_left(self) -> float:
+    def _get_functional_capacity(self) -> float:
         """Returns the how much charge is left in the battery"""
         return self._charge
 
-    def _set_charge_left(self, charge) -> None:
+    def _set_functional_capacity(self, charge) -> None:
         """Updates amount of battery charge left."""
         self._charge = charge
    
@@ -94,7 +94,7 @@ class Battery:
     voltage = property(_get_voltage, _set_voltage)
     temperature = property(_get_temperature, _set_temperature)
     resistance = property(_get_resistance, _set_resistance)
-    charge_left = property(_get_charge_left, _set_charge_left)
+    functional_capacity = property(_get_functional_capacity, _set_functional_capacity)
     charger = property(_get_charger)
     time = property(_get_time, _set_time)
     time_last_changed = property(_get_time_last_changed, _set_time_last_changed)
