@@ -1,19 +1,24 @@
-def lifespan(temperture: float, temperture_norm: float, voltage: float, current: float, discharge_c: float, thermal_runaway: float) -> int:
+# Estimate of how many full charge and discharge cycles the battery can handle before it begins to lose functional capacity.
+LIFESPAN: int
+# Importing the Charger class from the charger.py folder
+from classes.charger import Charger
+# Import everything from metrics
+from metrics import *
+
+def lifespan(charger: type[Charger], discharge_c: float, thermal_runaway: float, temperture_norm: float) -> int:
     ''' 
-    The degradation of the lifespan of the battery is affected by multiple factors.
-    These include:
-        temperture
-        voltage in and out 
-        current 
-        the rate of charge / discharge 
+    State of health capacity of battery = Total capacity ( ah ) / Begining of life capacity ( ah )
+    The BOL capacity for iPhone 13 Pro Max = 4352 mAH
 
-    The higher the voltage and current in the faster the rate of charge.
-    Temperture is self explanatory 
-    The rate of discharge will affect the lifespan.
+    For each charging cycle the total capacity decreases 
 
-    important:
+    The resistence within the battery goes up ( Impedence ). with each cycle.
 
-        I have added in a variable that does not exist yet in the class and that is the temperture_norm of the battery 
-        I have also stated type hinted that the return type will be an int as that is what the lifespan will be represented by.
+    Charge left in the battery = TTE * SOC 
+
+    With each cycle will decrease the Total capacity by 0.5
+
+    A cycle = When enough charge has flowed from the powerbrick to equal the total capacity of the battery.
     '''
+    
     pass

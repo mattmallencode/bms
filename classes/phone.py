@@ -3,7 +3,7 @@ from modules.metrics import *
 
 # Class representing the state of a phone.
 class Phone:
-    def __init__(self, powered_on: bool, display_on: bool, locked: bool) -> None:
+    def __init__(self, powered_on: bool, display_on: bool, locked: bool, is_charging: bool, power_draw: float) -> None:
         """
         Initializes an instance of the Phone class based on the arguments you pass to this constructor.
 
@@ -14,10 +14,12 @@ class Phone:
         plugged_in -- bool indicating whether the charger is plugged in 
         """
         # Initialize instance variables based on arguments passed to the constructor.
+        self._is_charging = is_charging
         self._powered_on = powered_on
         self._display_on = display_on
         self._locked = locked
-        self._plugged_in = False
+        self._is_charging = is_charging
+        self._power_draw = power_draw
 
         self._root = tkinter.Tk()
         self._root.title("Phone")
@@ -62,8 +64,14 @@ class Phone:
 
         self._canvas.pack()
         self._root.mainloop()
+    
+    def _get_is_charging(self) -> bool:
+        """Returns whether the battery is charging or not."""
+        return self._is_charging
 
-
+    def _set_is_charging(self, is_charging) -> None:
+        """Updates the charging status of the battery."""
+        self._is_charging = is_charging
 
     def _press(self, event):
         """ Handles clicks on the canvas """
@@ -145,13 +153,30 @@ class Phone:
         """Updates whether the phone is locked or not."""
         self._locked = true_or_false
 
+    def _get_is_charging(self) -> bool:
+        """Returns whether the phone is charging or not."""
+        return self._is_charging
+
+    def _set_is_charging(self, true_or_false: bool) -> None:
+        """Updates whether the phone is charging or not."""
+        self._is_charging = true_or_false
+    
+    def _get_power_draw(self) -> float:
+        """Returns the power the phone is drawing."""
+        return self._power_draw
+    
+    def _set_power_draw(self, power_draw: float) -> None:
+        """Updates the phone's power draw."""
+        self._power_draw = power_draw
+        
     # Assign all of the getters to class properties. No setters as all of the class' attribtutes are constants.
     # This means private instance variables can be accessed "directly" by using the getters and setters as an interface.
     # E.g. my_phone.powered_on = False calls _set_powered_on(False) under the hood.
     powered_on = property(_get_powered_on, _set_powered_on)
     display_on = property(_get_display_on, _set_display_on)
     locked = property(_get_locked, _set_locked)
-
+    is_charging = property(_get_is_charging, _set_is_charging)
+    power_draw = property(_get_power_draw, _set_power_draw)
 
 if __name__ == "__main__":
     Phone(False, False, False)

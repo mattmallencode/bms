@@ -1,25 +1,30 @@
-# Class representing the state of a phone charger.
+from typing import Type
+from classes.battery import Battery
+from classes.powerbrick import PowerBrick
+from classes.phone import Phone
+
 class Charger:
-    def __init__(self, CURRENT: float, VOLTAGE: float, ) -> None:
-        """
-        Initializes an instance of the Charger class based on the arguments you pass to this constructor.
+    def __init__(self, battery: Type[Battery], powerbrick:Type[PowerBrick]):
+        self._battery = battery
+        self._powerbrick = powerbrick
+        self._charge_setting = None
+        
+    def _get_charge_setting(self):
+        return self._charge_setting
 
-        Keyword arguments:
-        CURRENT -- constant, the current of the charger.
-        VOLTAGE -- constant, the voltage of the charger.
-        """
-        self._CURRENT = CURRENT
-        self._VOLTAGE = VOLTAGE
+    def _set_charge_setting(self, setting):
+        self._charge_setting = setting
 
-    def _get_current(self) -> float:
-        """Returns the current of the charger."""
-        return self._CURRENT
+    def report_temperature(self) -> float:
+        return self.battery.temperature
+    
+    def report_voltage(self) -> float:
+        return self.battery.voltage
 
-    def _get_voltage(self) -> float:
-        """Returns the voltage of the charger"""
-        return self._VOLTAGE
-    # Assign all of the getters to class properties. No setters as all of the class' attribtutes are constants.
-    # This means private instance variables can be accessed "directly" by using the getters and setters as an interface.
-    # E.g. my_charger.current calls _get_current() under the hood.
-    current = property(_get_current)
-    voltage = property(_get_current)
+    def report_current(self) -> float:
+        return self.battery.current
+    
+    def report_resistance(self) -> float:
+        return self.battery.resistance
+        
+    charge_setting = property(_get_charge_setting, _set_charge_setting)
