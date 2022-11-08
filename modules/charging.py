@@ -64,4 +64,3 @@ def discharge(battery: Type[Battery], phone: Type[Phone], last_time_discharged: 
     battery.voltage -= phone.power_draw * \
         (last_time_discharged - new_last_time())
     return new_last_time
-    battery.voltage -= phone.power_draw * time_passed
