@@ -77,7 +77,7 @@ class Charger:
             # apply the formulas to the varibles for the duration that they were affected
 
             # the voltage
-            voltage_max = config.VOLTAGE_MAX
+            voltage_max = PowerBrick.voltage
             # Apply the voltage formula for trickle charge
             new_voltage = (voltage_max / 1000) * time_in_trickle_charge
             self.voltage = new_voltage
@@ -104,7 +104,7 @@ class Charger:
             time_in_constant_voltage = self.time() - self.time_last_changed()
             # Apply the voltage formula for constant voltage
             # Voltage
-            self.voltage = config.VOLTAGE_MAX
+            self.voltage = PowerBrick.voltage
             # Current
             current = config.CHARGE_C(math.cos(time_in_constant_voltage / config.CHARGE_C) + config.CHARGE_C)
             self.current = current
