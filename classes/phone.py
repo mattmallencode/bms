@@ -4,7 +4,7 @@ from time import time
 
 # Class representing the state of a phone.
 class Phone:
-    def __init__(self, powered_on: bool, display_on: bool, locked: bool, is_charging: bool, power_draw: float, battery_percentage: float) -> None:
+    def __init__(self, powered_on: bool, display_on: bool, locked: bool, is_charging: bool, power_draw: float) -> None:
         """
         Initializes an instance of the Phone class based on the arguments you pass to this constructor.
 
@@ -22,11 +22,6 @@ class Phone:
         self._locked = locked
         self._is_charging = is_charging
         self._power_draw = 0
-        self._battery_percentage = battery_percentage
-
-        # this is variable is used in calculating the battery percentage. It is reported to the MS by the phone
-        self._time_since_last_percentage_calculation = None
-
 
         self._root = tkinter.Tk()
         self._root.title("Phone")
@@ -171,7 +166,7 @@ class Phone:
             except:
                 self._timetill.set("could not find TTE")
             self._connector = self._canvas.create_rectangle(self._connector_corners["X1"], self._connector_corners["Y1"], self._connector_corners["X2"], self._connector_corners["Y2"], fill="red3", outline="black")
-
+        self._screen_state()
 
 
     """ Getters / Setters ------------------------------------------------------------------------ """
@@ -215,12 +210,6 @@ class Phone:
         """Updates the phone's power draw."""
         self._power_draw = power_draw
 
-    def _get_battery_percentage(self) -> float:
-        return self._power_draw
-    
-    def _update_battery_percentage(self, percentage) -> None:
-        self._battery_percentage = percentage
-
     def _get_is_charging(self) -> bool:
         """Returns whether the battery is charging or not."""
         return self._is_charging
@@ -228,13 +217,6 @@ class Phone:
     def _set_is_charging(self, is_charging) -> None:
         """Updates the charging status of the battery."""
         self._is_charging = is_charging
-        
-    def _get_time_since_last_percentage_calculation(self) -> time:
-        return self._time_since_last_percentage_calculation
-
-    def _set_time_since_last_percentage_calculation(self, time) -> None:
-        self._time_since_last_percentage_calculation = time
-
 
     # Assign all of the getters to class properties. No setters as all of the class' attribtutes are constants.
     # This means private instance variables can be accessed "directly" by using the getters and setters as an interface.
@@ -244,7 +226,6 @@ class Phone:
     locked = property(_get_locked, _set_locked)
     is_charging = property(_get_is_charging, _set_is_charging)
     power_draw = property(_get_power_draw, _set_power_draw)
-    time_since_last_percentage_calculation = property(_get_time_since_last_percentage_calculation, _set_time_since_last_percentage_calculation)
 
 if __name__ == "__main__":
     Phone(False, False, True, False, 5.0)
