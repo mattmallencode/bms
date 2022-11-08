@@ -6,7 +6,7 @@ from typing import Type
 
 # Class representing the state of a phone.
 class Phone:
-    def __init__(self, powered_on: bool, display_on: bool, locked: bool, is_charging: bool, power_draw: float, charger) -> None:
+    def __init__(self, powered_on: bool, display_on: bool, locked: bool, is_charging: bool, power_draw: float) -> None:
         """
         Initializes an instance of the Phone class based on the arguments you pass to this constructor.
 
@@ -24,6 +24,7 @@ class Phone:
         self._locked = locked
         self._is_charging = is_charging
         self._power_draw = 0
+        self._is_dead = False
 
         self._root = tkinter.Tk()
         self._root.title("Phone")
