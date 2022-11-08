@@ -17,3 +17,5 @@ CAPACITY: float = 4352
 # The threshold of the current when battery is fully charged
 THRESHOLD: float
 
+# Estimate of how many full charge and discharge cycles the battery can handle before it begins to lose functional capacity.
+lifespan: float = 1
