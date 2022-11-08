@@ -1,6 +1,7 @@
 from classes.phone import Phone
-from modules import charging
-from modules.health import lifespan
+from ms_modules import charging
+from ms_modules.health import lifespan
+from classes import charger 
 
 """
 last_time_discharged: float = None
@@ -15,9 +16,6 @@ phone = Phone(False, False, False, True, 10)
 # we also need to make sure that things are "finished" out when one of these major events happens -- this definitely does not make sense I'll explain in person.
 
 # Just testing here
-lifespan(10, phone, 100, 10)
-print(charging.CAPACITY)
-
 
 
 """

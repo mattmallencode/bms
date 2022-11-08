@@ -3,7 +3,7 @@ lifespan: float = 1
 # Importing the Charger class from the charger.py folder
 from classes.charger import Charger
 # Import everything from metrics
-import modules.charging as charging
+import ms_modules.charging as charging
 
 def lifespan(charger: type[Charger], dif_in_soc: float) -> float:
     ''' 
