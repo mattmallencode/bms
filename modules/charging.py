@@ -2,12 +2,12 @@
 from typing import Type
 # Importing the Charger class
 from classes.charger import Charger
+# Importing the Battery class from the battery.py folder
+from classes.battery import Battery
 # Importing the Phone class
 from classes.phone import Phone
-# Importing the Battery class
-from classes.battery import Battery
-
-
+# Import the time class, we'll need it for the discharge function.
+from time import time
 # The optimum voltage for this battery, should be trended towards to minimize battery degradation.
 VOLTAGE_NORM: float
 # At this voltage the battery is dead, trending towards this voltage indicates a lower capacity.
@@ -22,8 +22,8 @@ DISCHARGE_C: float
 THERMAL_RUNAWAY: float
 # The battery's status, either dead or alive.
 BATTERY_ALIVE: bool
-# The max capacity of the battery with no degradation
-CAPACITY: float
+# The original capacity of the battery.
+CAPACITY: float = 4352
 # The threshold of the current when battery is fully charged
 THRESHOLD: float
 
@@ -36,25 +36,32 @@ def decide_charge_mode(charger: Type[Charger]) -> None:
     setting: str
     battery: Type[Battery]
     battery = charger.battery
-   
+
     if battery.voltage < VOLTAGE_MIN:
-        setting = "trickle"    
+        setting = "trickle"
     else:
         if battery.voltage < VOLTAGE_MAX:
             setting = "constant_current"
         elif battery.voltage >= VOLTAGE_MAX:
             setting = "constant_voltage"
-            if battery.current >= THRESHOLD:
-                setting = "trickle" 
-  
+            if battery.current <= THRESHOLD:
+                setting = "trickle"
     charger.charge_setting = setting
 
 
-def discharge(battery: Type[Battery], phone: Type[Phone], time_passed: float) -> float:
+def discharge(battery: Type[Battery], phone: Type[Phone], last_time_discharged: float) -> float:
     '''
     Function to draw charge from the battery based on the power draw of the phone (GUI).
 
+    battery -- the battery the BMS is managing.
     phone -- the phone the BMS is managing the battery of.
+    last_time_discharged -- the last time this function was called.
+
+    Returns the new time stanp to be passed as "last_time_discharged" the next time discharge is called.
     '''
     # Discharge the battery by the power draw times the time_passed.
+    new_last_time = time.time()
+    battery.voltage -= phone.power_draw * \
+        (last_time_discharged - new_last_time())
+    return new_last_time
     battery.voltage -= phone.power_draw * time_passed

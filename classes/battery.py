@@ -1,5 +1,5 @@
 # Importing the charger function to access the charger setting.
-from classes.charger import Charger
+#from classes.charger import Charger
 # import math module 
 import math
 # import the charging file
@@ -9,7 +9,7 @@ from time import time
 
 # Class representing the state of a battery of a phone.
 class Battery:
-    def __init__(self, current: float, voltage: float, temperature: float,  resistance: float, charger: type[Charger]) -> None:
+    def __init__(self, current: float, voltage: float, temperature: float,  resistance: float, charger: 10) -> None:
         """
         Initializes an instance of the Battery class based on the arguments you pass to this constructor.
 
@@ -155,4 +155,3 @@ class Battery:
 
         #Once the varibales have beeen changed 
         self._time_last_changed = self._time
-    
