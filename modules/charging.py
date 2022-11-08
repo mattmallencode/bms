@@ -2,8 +2,6 @@
 from typing import Type
 # Importing the Charger class
 from classes.charger import Charger
-# Need the datetime module to appropriately discharge the battery.
-from datetime import datetime
 # Importing the Battery class from the battery.py folder
 from classes.battery import Battery
 # Importing the Phone class
@@ -25,10 +23,9 @@ THERMAL_RUNAWAY: float
 # The battery's status, either dead or alive.
 BATTERY_ALIVE: bool
 # The original capacity of the battery.
-CAPACITY = 4352
+CAPACITY: float = 4352
 # The threshold of the current when battery is fully charged
 THRESHOLD: float
-
 
 def decide_charge_mode(charger: Type[Charger]) -> None:
     '''
@@ -49,9 +46,7 @@ def decide_charge_mode(charger: Type[Charger]) -> None:
             setting = "constant_voltage"
             if battery.current <= THRESHOLD:
                 setting = "trickle"
-
     charger.charge_setting = setting
-    print(CAPACITY)
 
 
 def discharge(battery: Type[Battery], phone: Type[Phone], last_time_discharged: float) -> float:
@@ -69,3 +64,4 @@ def discharge(battery: Type[Battery], phone: Type[Phone], last_time_discharged: 
     battery.voltage -= phone.power_draw * \
         (last_time_discharged - new_last_time())
     return new_last_time
+    battery.voltage -= phone.power_draw * time_passed
