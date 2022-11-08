@@ -4,7 +4,9 @@ from ms_modules.health import lifespan
 from classes.charger import Charger
 from classes.battery import Battery
 from classes.phone import Phone
-from classes.powerbrick import PowerBrick
+from ms_modules.health import lifespan
+from classes import charger 
+
 
 """
 last_time_discharged: float = None
@@ -45,3 +47,4 @@ while True:
             charging.discharge(battery, phone, last_time_discharged)
             last_time_discharged = None
 """
+
