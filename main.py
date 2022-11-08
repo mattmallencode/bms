@@ -1,6 +1,6 @@
 from classes.phone import Phone
-from modules import charging
-from modules.health import lifespan
+from ms_modules import charging
+from ms_modules.health import lifespan
 
 """
 last_time_discharged: float = None
