@@ -10,7 +10,7 @@ CHARGE_C: float
 DISCHARGE_C: float
 # The temperature at which the battery will keep increasing in temperature and go on fire.
 THERMAL_RUNAWAY: float
-# The battery's status, either dead or alive.
+# The battery's status, either dead or alive. 
 BATTERY_ALIVE: bool
 # The original capacity of the battery.
 CAPACITY: float = 4352
