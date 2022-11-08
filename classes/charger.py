@@ -27,8 +27,8 @@ class Charger:
     def report_resistance(self) -> float:
         return self._battery.resistance
 
-    def report_charge_left(self) -> float:
-        return self._battery.charge_left
+    def report_functional_capacity(self) -> float:
+        return self._battery.functional_capacity
 
     def _get_c_rate(self) -> float:
         return self._c_rate
