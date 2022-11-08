@@ -4,8 +4,6 @@
 import math
 # import the charging file
 from ms_modules import charging
-#import the time 
-from time import time
 
 # Class representing the state of a battery of a phone.
 class Battery:
