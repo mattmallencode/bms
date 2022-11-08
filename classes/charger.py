@@ -1,7 +1,6 @@
 from typing import Type
 from classes.battery import Battery
 from classes.powerbrick import PowerBrick
-from classes.phone import Phone
 
 class Charger:
     def __init__(self, battery: Type[Battery], powerbrick:Type[PowerBrick]):

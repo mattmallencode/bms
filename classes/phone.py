@@ -10,6 +10,7 @@ class Phone:
         powered_on -- bool indicating whether the phone is currently powered on.
         display_on -- bool indicating whether the phone's screen / display is turned on.
         locked -- bool indicating whether the phone is currently locked.
+        power_draw -- how much voltage should be decreased per second.
         """
         # Initialize instance variables based on arguments passed to the constructor.
         self._is_charging = is_charging
