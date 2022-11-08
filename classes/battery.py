@@ -1,5 +1,5 @@
 # Importing the charger function to access the charger setting.
-from classes.charger import Charger
+#from classes.charger import Charger
 # import math module 
 import math
 # import the charging file
@@ -9,7 +9,7 @@ from time import time
 
 # Class representing the state of a battery of a phone.
 class Battery:
-    def __init__(self, current: float, voltage: float, temperature: float,  resistance: float, charger: type[Charger]) -> None:
+    def __init__(self, current: float, voltage: float, temperature: float,  resistance: float, charger: 10) -> None:
         """
         Initializes an instance of the Battery class based on the arguments you pass to this constructor.
 
@@ -18,7 +18,7 @@ class Battery:
         voltage -- the voltage of the battery.
         temperature -- the temperature of the battery.
         resistance -- the resistance of the battery.
-        charge_left - how much charge the battery holds at present. Measured in ampere hours (aH)
+        functional_capacity - how much charge the battery holds at present. Measured in ampere hours (aH)
         """
 
         # Initialize instance variables based on arguments passed to the constructor.
@@ -63,11 +63,11 @@ class Battery:
         """Updates the resistance of the battery."""
         self._resistance = resistance
 
-    def _get_charge_left(self) -> float:
+    def _get_functional_capacity(self) -> float:
         """Returns the how much charge is left in the battery"""
         return self._charge
 
-    def _set_charge_left(self, charge) -> None:
+    def _set_functional_capacity(self, charge) -> None:
         """Updates amount of battery charge left."""
         self._charge = charge
    
@@ -94,7 +94,7 @@ class Battery:
     voltage = property(_get_voltage, _set_voltage)
     temperature = property(_get_temperature, _set_temperature)
     resistance = property(_get_resistance, _set_resistance)
-    charge_left = property(_get_charge_left, _set_charge_left)
+    functional_capacity = property(_get_functional_capacity, _set_functional_capacity)
     charger = property(_get_charger)
     time = property(_get_time, _set_time)
     time_last_changed = property(_get_time_last_changed, _set_time_last_changed)
@@ -105,38 +105,36 @@ class Battery:
         # If the time is None it means this is the first time it has beeen called.
         if self._time == None:
             current_time = time.time()
-            self._set_time(current_time)
-            self._set_time_last_changed(current_time)
+            self.time = current_time
+            self.time_last_changed = current_time
         
         # If the charge setting is "trickle" alter the variables based on the trickle charge.
         if self._charger.charge_setting == "trickle":
             # Taking the amount of time has passed since the last charge state.
             # Assume it has been charging in trickle charge for that length of time.
             # Modify the variables accordingly 
-            time_in_trickle_charge = self._get_time() - self._get_time_last_changed()
+            time_in_trickle_charge = self.time - self.time_last_changed
             # apply the formulas to the varibles for the duration that they were affected
 
             # the voltage
             voltage_max = charging.VOLTAGE_MAX
             # Apply the voltage formula for trickle charge
-            voltage = (voltage_max / 1000) * time_in_trickle_charge
-            self._set_voltage(voltage)
+            new_voltage = (voltage_max / 1000) * time_in_trickle_charge
+            self.voltage = new_voltage
             # The current is 0 in trickle charge
-            self._set_current(0.0) 
-            # Temperture
+            self.current = 0.0 
 
         # If the charge setting is "constant_current" alter the variables based on the constant current.
         elif self._charger.charge_setting == "constant_current":
             # Taking the amount of time has passed since the last charge state.
             # Assume it has been charging with constant current for that length of time.
             # Modify the variables accordingly 
-            time_in_constant_current = self._get_time() - self._get_time_last_changed()
+            time_in_constant_current = self.time - self.time_last_changed
             # Apply the voltage formula for constant current
-            voltage = (1.0 / charging.CHARGE_C) * time_in_constant_current ** 2
-            self._set_voltage(voltage)
+            new_voltage = (1.0 / charging.CHARGE_C) * time_in_constant_current ** 2
+            self.voltage = new_voltage
             # Current
-            self._set_current(charging.CHARGE_C)
-            # Temperture
+            self.current = charging.CHARGE_C
 
 
         # If it is neither of those that means it is "constant_voltage" hence we alter the variable accordingly.
@@ -144,15 +142,13 @@ class Battery:
             # Taking the amount of time has passed since the last charge state.
             # Assume it has been charging with constant voltage for that length of time.
             # Modify the variables accordingly 
-            time_in_constant_voltage = self._get_time() - self._get_time_last_changed()
+            time_in_constant_voltage = self.time() - self.time_last_changed()
             # Apply the voltage formula for constant voltage
             # Voltage
-            self._set_voltage(charging.VOLTAGE_MAX)
+            self.voltage = charging.VOLTAGE_MAX
             # Current
             current = charging.CHARGE_C(math.cos(time_in_constant_voltage / charging.CHARGE_C) + charging.CHARGE_C)
-            self._set_current(current)
-            # Temperture
+            self.current = current
 
         #Once the varibales have beeen changed 
         self._time_last_changed = self._time
-    
