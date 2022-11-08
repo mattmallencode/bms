@@ -53,4 +53,3 @@ def state_of_charge(charger: Type[Charger], phone:Type[Phone], battery_percentag
 
     return soc
 
-
