@@ -1,7 +1,9 @@
 from classes.battery import Battery
 from classes.charger import Charger
 from classes.phone import Phone
-from classes.powerbrick import PowerBrick
+from ms_modules.health import lifespan
+from classes import charger 
+
 
 battery = Battery(1.0, 1.0, 1.0, 1.0)
 charger = Charger(battery)
