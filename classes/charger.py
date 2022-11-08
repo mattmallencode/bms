@@ -1,14 +1,27 @@
 from typing import Type
-from classes.battery import Battery
-from classes.powerbrick import PowerBrick
+
+from battery import Battery
+from powerbrick import PowerBrick
 
 class Charger:
     def __init__(self, battery: Type[Battery], powerbrick:Type[PowerBrick]):
+        """
+        Charger object for a battery that charges the battery in a safe manor
+
+        Satisfies requirement 1: Monitor Battery State
+
+        battery -- the battery whoes 'sensors' we want to read
+        powerbrick -- the power supply that provides the charge that is passed into the battery in a controlled manor
+        """
         self._battery = battery
         self._powerbrick = powerbrick
+        
+
         self._charge_setting = None
+        # c rate should be assigned from the config.py
         self._c_rate = None
         
+
     def _get_charge_setting(self) -> str:
         return self._charge_setting
 
