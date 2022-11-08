@@ -1,16 +1,15 @@
 # Importing the charger function to access the charger setting.
-from classes.charger import Charger
+#from classes.charger import Charger
 # import math module 
 import math
 # import the charging file
 from modules import charging
-
 #import the time 
 from time import time
 
 # Class representing the state of a battery of a phone.
 class Battery:
-    def __init__(self, current: float, voltage: float, temperature: float,  resistance: float, charger: type[Charger]) -> None:
+    def __init__(self, current: float, voltage: float, temperature: float,  resistance: float, charger: 10) -> None:
         """
         Initializes an instance of the Battery class based on the arguments you pass to this constructor.
 
@@ -19,13 +18,16 @@ class Battery:
         voltage -- the voltage of the battery.
         temperature -- the temperature of the battery.
         resistance -- the resistance of the battery.
+        charge_left - how much charge the battery holds at present. Measured in ampere hours (aH)
         """
+
         # Initialize instance variables based on arguments passed to the constructor.
         self._current = current
         self._voltage = voltage
         self._temperature = temperature
         self._resistance = resistance
         self._charger = charger
+        
         # Time 
         self._time = None
         self._time_last_changed = None
@@ -60,6 +62,14 @@ class Battery:
     def _set_resistance(self, resistance) -> None:
         """Updates the resistance of the battery."""
         self._resistance = resistance
+
+    def _get_charge_left(self) -> float:
+        """Returns the how much charge is left in the battery"""
+        return self._charge
+
+    def _set_charge_left(self, charge) -> None:
+        """Updates amount of battery charge left."""
+        self._charge = charge
    
     def _get_charger(self) -> None:
         return self._charger
@@ -75,6 +85,7 @@ class Battery:
     
     def _set_time_last_changed(self, time_last_changed) -> float:
         self._time_last_changed = time_last_changed
+
     
     # Assign all of the getters of setters to class properties.
     # This means private instance variables can be accessed "directly" by using the getters and setters as an interface.
@@ -83,6 +94,7 @@ class Battery:
     voltage = property(_get_voltage, _set_voltage)
     temperature = property(_get_temperature, _set_temperature)
     resistance = property(_get_resistance, _set_resistance)
+    charge_left = property(_get_charge_left, _set_charge_left)
     charger = property(_get_charger)
     time = property(_get_time, _set_time)
     time_last_changed = property(_get_time_last_changed, _set_time_last_changed)
@@ -143,4 +155,3 @@ class Battery:
 
         #Once the varibales have beeen changed 
         self._time_last_changed = self._time
-    

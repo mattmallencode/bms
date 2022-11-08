@@ -1,21 +1,34 @@
-from classes.battery import Battery
-from classes.charger import Charger
 from classes.phone import Phone
-from classes.powerbrick import PowerBrick
+from modules import charging
+from modules.health import lifespan
 
-battery = Battery(1.0, 1.0, 1.0, 1.0)
-charger = Charger(battery)
-phone = Phone(False, False, False, True)
-brick = PowerBrick(1.0, 1.0)
+"""
+last_time_discharged: float = None
+"""
+phone = Phone(False, False, False, True, 10)
 
-from modules.charging import decide_charge_mode
+#battery = Battery(1.0, 1.0, 1.0, 1.0)
+#charger = Charger(battery)
+#brick = PowerBrick(1.0, 1.0)
 
+# we will need to reset some attribtues in battery and in MS when major events happen e.g. stopping charge, stopping discharge
+# we also need to make sure that things are "finished" out when one of these major events happens -- this definitely does not make sense I'll explain in person.
+
+# Just testing here
+lifespan(10, phone, 100, 10)
+print(charging.CAPACITY)
+
+
+
+"""
 while True:
-    if charger.is_powerbrick_plugged_in():
-        charge_mode = decide_charge_mode()
-       
+    if phone.power_on == True:
+        if last_time_discharged is None:
+            last_time_discharged = time.time()
+        else:
+            charging.discharge(battery, phone, last_time_discharged)
     else:
-        phone._is_charging = False
-
-    
-
+        if last_time_discharged is not None:
+            charging.discharge(battery, phone, last_time_discharged)
+            last_time_discharged = None
+"""

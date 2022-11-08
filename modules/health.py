@@ -1,24 +1,23 @@
 # Estimate of how many full charge and discharge cycles the battery can handle before it begins to lose functional capacity.
-LIFESPAN: int
+lifespan: float = 1
 # Importing the Charger class from the charger.py folder
 from classes.charger import Charger
 # Import everything from metrics
-from metrics import *
+import modules.charging as charging
 
-def lifespan(charger: type[Charger], discharge_c: float, thermal_runaway: float, temperture_norm: float) -> int:
+def lifespan(charger: type[Charger], dif_in_soc: float) -> float:
     ''' 
-    State of health capacity of battery = Total capacity ( ah ) / Begining of life capacity ( ah )
-    The BOL capacity for iPhone 13 Pro Max = 4352 mAH
+    Adjusts the lifespan of the battery according to how many full charge cycles it has gone through.
+    A lithium ion battery retains 80% of its original capacity after 500 charge cycles.
+    So, this means that per charge cycle the capacity should reduce by 0.04 percent per charge cycle or 0.0004% for every 1% of discharge.
+    The above is taken from Apple (will reference properly later).
 
-    For each charging cycle the total capacity decreases 
+    Keyword arguments:
+    charger -- the charger of the MS.
+    dif_in_soc -- the difference in SoC before discharge was called, and after discharge was called.
 
-    The resistence within the battery goes up ( Impedence ). with each cycle.
-
-    Charge left in the battery = TTE * SOC 
-
-    With each cycle will decrease the Total capacity by 0.5
-
-    A cycle = When enough charge has flowed from the powerbrick to equal the total capacity of the battery.
+    Returns the adjusted lifespan of the battery.
     '''
-    
-    pass
+    total_charge_cycles += dif_in_soc
+    lifespan -= ((0.0004 * dif_in_soc) / 100)
+    return lifespan
