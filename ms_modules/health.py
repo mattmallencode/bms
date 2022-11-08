@@ -1,3 +1,4 @@
+# Need the global config properties.
 import config
 
 def adjust_lifespan(dif_in_soc: float) -> float:
@@ -8,7 +9,6 @@ def adjust_lifespan(dif_in_soc: float) -> float:
     The above is taken from Apple (will reference properly later).
 
     Keyword arguments:
-    charger -- the charger of the MS.
     dif_in_soc -- the difference in SoC before discharge was called, and after discharge was called.
 
     Returns the adjusted lifespan of the battery.
