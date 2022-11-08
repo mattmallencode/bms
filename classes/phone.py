@@ -1,7 +1,9 @@
 import tkinter
 from time import time
 from typing import Type
-import threading
+
+
+""" use properties dont change self.X """
 
 
 # Class representing the state of a phone.
@@ -234,5 +236,5 @@ if __name__ == "__main__":
     P = Phone(False, False, True, False, 5.0)
     while True:
         P._root.update_idletasks()
-        print("yo")
         P._root.update()
+        # https://stackoverflow.com/questions/29158220/tkinter-understanding-mainloop
