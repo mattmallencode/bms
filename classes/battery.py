@@ -2,8 +2,7 @@
 #from classes.charger import Charger
 # import math module 
 import math
-# import the charging file
-from ms_modules import charging
+
 
 # Class representing the state of a battery of a phone.
 class Battery:

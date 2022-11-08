@@ -3,6 +3,8 @@ from classes.battery import Battery
 from classes.powerbrick import PowerBrick
 #import the time 
 import time
+# Import all from config.py
+from config import *
 
 class Charger:
     def __init__(self, battery: Type[Battery], powerbrick:Type[PowerBrick]):
