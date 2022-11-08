@@ -1,7 +1,7 @@
 import tkinter
 from time import time
 from typing import Type
-
+import threading
 
 
 # Class representing the state of a phone.
@@ -75,7 +75,6 @@ class Phone:
         self._charging_set()
 
         self._canvas.pack()
-        self._root.mainloop()
 
 
     def _screen_state(self):
@@ -94,7 +93,7 @@ class Phone:
 
         """ Handles clicks on the canvas """
         # power button
-        if (self._power_button_corners["X1"] < event.x) and (self._power_button_corners["Y1"] < event.y) and (self._power_button_corners["X2"] > event.x) and (self._power_button_corners["Y2"] > event.y):
+        if (self._power_button_corners["X1"] < event.x) and (self._power_button_corners["Y1"] < event.y) and (self._power_button_corners["X2"] > event.x) and (self._power_button_corners["Y2"] > event.y) and not self._is_dead:
             if self.powered_on:
                 self._display_on = False
                 self._powered_on = False
@@ -232,4 +231,8 @@ class Phone:
     is_dead = property(_get_is_dead, _get_is_dead)
 
 if __name__ == "__main__":
-    Phone(False, False, True, False, 5.0)
+    P = Phone(False, False, True, False, 5.0)
+    while True:
+        P._root.update_idletasks()
+        print("yo")
+        P._root.update()
