@@ -10,25 +10,6 @@ phone = Phone(False, False, False, True, 10)
 
 # Taking the amount of time has passed since the last charge state. # Assume it has been charging in trickle charge for that length of time.
             # Modify the variables accordingly 
-VOLTAGE_MAX = 10
-time1 = 19
-time_last_changed = 10
-voltage = 20
-current = 0
-pcurrent = 4
-time_in_trickle_charge = time1 - time_last_changed
-            # apply the formulas to the varibles for the duration that they were affected
-
-            # the voltage
-voltage_max = VOLTAGE_MAX
-            # Apply the voltage formula for trickle charge
-new_voltage = (voltage_max / 1000) * time_in_trickle_charge
-voltage = new_voltage
-            # The current is 1/100 of the normal current in trickle charge
-current = pcurrent/100 
-
-print(voltage)
-print(current)
 
 
 """
