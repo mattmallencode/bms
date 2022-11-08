@@ -1,15 +1,12 @@
 import tkinter
 from time import time
-"""
-from charger import Charger
-
-from ms_modules.metrics import *"""
+from typing import Type
 
 
 
 # Class representing the state of a phone.
 class Phone:
-    def __init__(self, powered_on: bool, display_on: bool, locked: bool, is_charging: bool, power_draw: float) -> None:
+    def __init__(self, powered_on: bool, display_on: bool, locked: bool, is_charging: bool, power_draw: float, charger) -> None:
         """
         Initializes an instance of the Phone class based on the arguments you pass to this constructor.
 
@@ -161,13 +158,13 @@ class Phone:
     def _charging_set(self):
         if self._is_charging:
             try:
-                self._timetill.set(time_till_full())
+                self._timetill.set(time_till_full(charger, self))
             except:
                 self._timetill.set("could not find TTF")
             self._connector = self._canvas.create_rectangle(self._connector_corners["X1"], self._connector_corners["Y1"], self._connector_corners["X2"], self._connector_corners["Y2"], fill="green3", outline="black")
         else:
             try:
-                self._timetill.set(time_till_empty())
+                self._timetill.set(time_till_empty(charger, self))
             except:
                 self._timetill.set("could not find TTE")
             self._connector = self._canvas.create_rectangle(self._connector_corners["X1"], self._connector_corners["Y1"], self._connector_corners["X2"], self._connector_corners["Y2"], fill="red3", outline="black")
