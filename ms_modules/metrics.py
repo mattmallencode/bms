@@ -13,7 +13,7 @@ def time_till_full(charger: Type[Charger], phone: Type[Phone]) -> float:
     """
 
     ttf_from_empty = charger.report_functional_capacity() / charger.report_current()
-    ttf = ttf_from_empty * (100 - phone.battery_percentage)
+    ttf = ttf_from_empty * ((100 - phone.battery_percentage)/100)
     return ttf 
    
 
@@ -23,7 +23,7 @@ def time_till_empty(charger: Type[Charger], phone: Type[Phone]) -> float:
     """
 
     tte_from_full = charger.report_functional_capacity() / phone.power_draw
-    tte = tte_from_full * phone.battery_percentage
+    tte = tte_from_full * (phone.battery_percentage/100)
     return tte
 
 
@@ -52,4 +52,3 @@ def state_of_charge(charger: Type[Charger], phone:Type[Phone], battery_percentag
     config.battery_percentage = soc
 
     return soc
-
