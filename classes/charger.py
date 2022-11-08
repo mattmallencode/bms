@@ -1,6 +1,6 @@
 from typing import Type
-from classes.battery import Battery
-from classes.powerbrick import PowerBrick
+from battery import Battery
+from powerbrick import PowerBrick
 #import the time 
 import time
 # Import all from config.py
@@ -59,6 +59,9 @@ class Charger:
     c_rate = property(_get_c_rate, _set_c_rate)
 
     def affect_of_charging_the_battery(self) -> None:
+        ''' Charging the battery will affect the variables within the battery. 
+        In this case it is current and voltage. The varibales are altered differently based on the charge state.
+        '''
         # Time for the first time.
         if self._battery._time == None:
             current_time = time.time()
