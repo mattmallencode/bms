@@ -4,7 +4,7 @@ from classes.powerbrick import PowerBrick
 #import the time 
 import time
 # Import all from config.py
-from config import *
+import config as config
 
 class Charger:
     def __init__(self, battery: Type[Battery], powerbrick:Type[PowerBrick]):
@@ -72,9 +72,24 @@ class Charger:
             # apply the formulas to the varibles for the duration that they were affected
 
             # the voltage
-            voltage_max = VOLTAGE_MAX
+            voltage_max = config.VOLTAGE_MAX
             # Apply the voltage formula for trickle charge
             new_voltage = (voltage_max / 1000) * time_in_trickle_charge
             self.voltage = new_voltage
-            # The current is 0 in trickle charge
-            self.current = 0.0 
+            # The current is 1/100 of the normal current in trickle charge
+            self.current = PowerBrick.current/100 
+        
+        # If the charge setting is "constant_current" alter the variables based on the constant current.
+        elif self._charge_setting == "constant_current":
+            # Taking the amount of time has passed since the last charge state.
+            # Assume it has been charging with constant current for that length of time.
+            # Modify the variables accordingly 
+            time_in_constant_current = self.time - self.time_last_changed
+            # Apply the voltage formula for constant current
+            new_voltage = (1.0 / config.CHARGE_C) * time_in_constant_current ** 2
+            self.voltage = new_voltage
+            # Current
+            self.current = config.CHARGE_C
+
+        
+        
