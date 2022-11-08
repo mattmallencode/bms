@@ -213,13 +213,13 @@ class Phone:
         """Updates the phone's power draw."""
         self._power_draw = power_draw
 
-    def _get_is_charging(self) -> bool:
-        """Returns whether the battery is charging or not."""
-        return self._is_charging
+    def _get_is_dead(self) -> bool:
+        """Returns whether the phone is alive or dead."""
+        return self._is_dead
 
-    def _set_is_charging(self, is_charging) -> None:
-        """Updates the charging status of the battery."""
-        self._is_charging = is_charging
+    def _set_is_dead(self, _is_dead) -> None:
+        """Updates whether the phone is alive or dead."""
+        self._is_dead = _is_dead
 
     # Assign all of the getters to class properties. No setters as all of the class' attribtutes are constants.
     # This means private instance variables can be accessed "directly" by using the getters and setters as an interface.
@@ -229,6 +229,7 @@ class Phone:
     locked = property(_get_locked, _set_locked)
     is_charging = property(_get_is_charging, _set_is_charging)
     power_draw = property(_get_power_draw, _set_power_draw)
+    is_dead = property(_get_is_dead, _get_is_dead)
 
 if __name__ == "__main__":
     Phone(False, False, True, False, 5.0)
