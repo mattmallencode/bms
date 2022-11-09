@@ -44,7 +44,7 @@ class Phone:
         self._power_button_size = {"x":5, "y":50}
         self._notification_pannel_height = 20
         self._connector_size = {"x":50, "y":100}
-        self._settings_button_size = {"x":100, "y":75}
+        self._login_button_size = {"x":100, "y":75}
         #self._middle_x = self._screen_corners["X2"] - self._screen_corners["X1"]
         #self._middle_y = self._screen_corners["Y2"] - self._screen_corners["Y1"]
 
@@ -54,7 +54,7 @@ class Phone:
         self._power_button_corners = {"X1":self._canvas_size["x"], "Y1":self._bevel_radius+100, "X2":self._canvas_size["x"]+self._power_button_size["x"], "Y2":self._bevel_radius+100+self._power_button_size["y"]}
         self._notification_pannel_corners = {"X1":(self._bevel_radius/5)+self._top_corner["x"], "Y1":(self._bevel_radius*1.5)+self._top_corner["y"], "X2":(self._canvas_size["x"]-(self._bevel_radius/5)), "Y2":(self._bevel_radius*1.5)+self._top_corner["y"]+self._notification_pannel_height}
         self._connector_corners = {"X1":((self._canvas_size["x"]/2)-(self._connector_size["x"]/2)+self._top_corner["x"]/2), "Y1":self._canvas_size["y"], "X2":((self._canvas_size["x"]/2)+(self._connector_size["x"]/2))+self._top_corner["x"]/2, "Y2":(self._canvas_size["y"])+(self._connector_size["x"])}
-        self._settings_button = {"X1":((self._canvas_size["x"]/2)-(self._settings_button_size["x"]/2)+self._top_corner["x"]/2), "Y1":self._canvas_size["y"]*2/3, "X2":((self._canvas_size["x"]/2)+(self._settings_button_size["x"]/2))+self._top_corner["x"]/2, "Y2":(self._canvas_size["y"]*2/3)+self._settings_button_size["y"]} 
+        self._login_button = {"X1":((self._canvas_size["x"]/2)-(self._login_button_size["x"]/2)+self._top_corner["x"]/2), "Y1":self._canvas_size["y"]*2/3, "X2":((self._canvas_size["x"]/2)+(self._login_button_size["x"]/2))+self._top_corner["x"]/2, "Y2":(self._canvas_size["y"]*2/3)+self._login_button_size["y"]} 
 
         self._canvas = tkinter.Canvas(self._root, bg="white", width=self._canvas_size["x"]+self._power_button_size["x"], height=self._canvas_size["y"]+self._connector_size["x"])
         self._canvas.bind("<Button-1>", self._press)
@@ -109,7 +109,7 @@ class Phone:
                 self._powered_on = True
                 self._power_draw = 5.0
                 self._on_screen()
-            return
+            return self.powered_on
 
         # Charger toggle
         elif (self._connector_corners["X1"] < event.x) and (self._connector_corners["Y1"] < event.y) and (self._connector_corners["X2"] > event.x) and (self._connector_corners["Y2"] > event.y):
@@ -118,20 +118,26 @@ class Phone:
             else:
                 self.is_charging = True
             self._charging_set()
+            return self.is_charging
             
         # home button
         elif (self._home_button_corners["X1"] < event.x) and (self._home_button_corners["Y1"] < event.y) and (self._home_button_corners["X2"] > event.x) and (self._home_button_corners["Y2"] > event.y) and self._powered_on and self._locked:
-            self._display_on = True
+            if self._display_on == True:
+                self.display_on = False
+            else:
+                self._display_on = True
             self._screen_state()
             #self._canvas.create_text(self._canvas_size["x"]/2, self._canvas_size["y"]/2, fill="black", text="Phone is on\nthis is where inside\ndetails will go!")
             #self._lock_screen()
+            return self.display_on
 
         # Handles button clicks on the "screen" 
         elif self._display_on == True:
-             # settings button pressed
-            if (self._settings_button["X1"] < event.x) and (self._settings_button["Y1"] < event.y) and (self._settings_button["X2"] > event.x) and (self._settings_button["Y2"] > event.y) and self._locked:
+             # login button pressed
+            if (self._login_button["X1"] < event.x) and (self._login_button["Y1"] < event.y) and (self._login_button["X2"] > event.x) and (self._login_button["Y2"] > event.y) and self._locked:
                 self._locked = False
                 self._home_screen()
+                return self.locked
 
         print("powered_on", self._powered_on, "|display_on", self.display_on, "|locked", self._locked, "|is_charging", self._is_charging, "|power_draw", self._power_draw)
 
@@ -150,15 +156,15 @@ class Phone:
         # display ttf plugged in or tte when not
         self._canvas.create_text(self._canvas_size["x"]/2, self._canvas_size["y"]/2, fill="green3", text=self._timetill.get(), font="Helvetica 20")
 
-        # settings button
-        self._canvas.create_rectangle(self._settings_button["X1"], self._settings_button["Y1"], self._settings_button["X2"], self._settings_button["Y2"], fill="medium purple", outline="black")
-        self._canvas.create_text(self._settings_button["X1"]+(self._settings_button_size["x"]/2), self._settings_button["Y1"]+(self._settings_button_size["y"]/2), fill="pink", text="settings", font="Helvetica 12")
+        # login button
+        self._canvas.create_rectangle(self._login_button["X1"], self._login_button["Y1"], self._login_button["X2"], self._login_button["Y2"], fill="medium purple", outline="black")
+        self._canvas.create_text(self._login_button["X1"]+(self._login_button_size["x"]/2), self._login_button["Y1"]+(self._login_button_size["y"]/2), fill="pink", text="login", font="Helvetica 12")
 
 
     def _home_screen(self):
         """Handles home screen"""
         self._canvas.create_rectangle(self._screen_corners["X1"], self._screen_corners["Y1"], self._screen_corners["X2"], self._screen_corners["Y2"], fill="steelblue1", outline="black")
-        self._canvas.create_text(self._canvas_size["x"]/2, self._canvas_size["y"]/2, fill="white", text=f"Battery %\n and Battery Health: {config.lifespan}", font="Helvetica 16 bold")
+        self._canvas.create_text(self._canvas_size["x"]/2, self._canvas_size["y"]/2, fill="white", text=f"Battery %\and Battery Health: {config.lifespan}", font="Helvetica 16 bold")
 
     def _charging_set(self):
         if self._is_charging:
