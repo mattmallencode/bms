@@ -1,12 +1,9 @@
-# Importing the charger function to access the charger setting.
-#from classes.charger import Charger
-# import math module 
 import math
 
 
 # Class representing the state of a battery of a phone.
 class Battery:
-    def __init__(self, current: float, voltage: float, temperature: float,  resistance: float, charger: 10) -> None:
+    def __init__(self, current: float, voltage: float, temperature: float,  resistance: float) -> None:
         """
         Initializes an instance of the Battery class based on the arguments you pass to this constructor.
 
@@ -23,7 +20,6 @@ class Battery:
         self._voltage = voltage
         self._temperature = temperature
         self._resistance = resistance
-        self._charger = charger
         
         # Time 
         self._time = None
@@ -67,9 +63,6 @@ class Battery:
     def _set_functional_capacity(self, charge) -> None:
         """Updates amount of battery charge left."""
         self._charge = charge
-   
-    def _get_charger(self) -> None:
-        return self._charger
     
     def _get_time(self) -> float:
         return self._time
@@ -92,6 +85,5 @@ class Battery:
     temperature = property(_get_temperature, _set_temperature)
     resistance = property(_get_resistance, _set_resistance)
     functional_capacity = property(_get_functional_capacity, _set_functional_capacity)
-    charger = property(_get_charger)
     time = property(_get_time, _set_time)
     time_last_changed = property(_get_time_last_changed, _set_time_last_changed)

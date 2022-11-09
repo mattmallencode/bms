@@ -1,6 +1,6 @@
 from typing import Type
-from battery import Battery
-from powerbrick import PowerBrick
+from classes.battery import Battery
+from classes.powerbrick import PowerBrick
 #import the time 
 import time
 # Import all from config.py
