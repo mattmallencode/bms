@@ -1,13 +1,10 @@
 from time import time
-from typing import Type
-from classes.charger import Charger
-from classes.phone import Phone
 import config
 
 time_since_last_soc_calculation: time
 battery_percentage: float
 
-def time_till_full(charger: Type[Charger], phone: Type[Phone]) -> float:
+def time_till_full(charger, phone) -> float:
     """
     time_till_full returns the time (in hours) until the battery is fully charged from its current battery discharged
     """
@@ -17,7 +14,7 @@ def time_till_full(charger: Type[Charger], phone: Type[Phone]) -> float:
     return ttf 
    
 
-def time_till_empty(charger: Type[Charger], phone: Type[Phone]) -> float:
+def time_till_empty(charger, phone) -> float:
     """
     time_till_empty returns the time (in hours) until the battery is fully discharged from its current battery percentage
     """
@@ -27,7 +24,7 @@ def time_till_empty(charger: Type[Charger], phone: Type[Phone]) -> float:
     return tte
 
 
-def state_of_charge(charger: Type[Charger], phone:Type[Phone], battery_percentage) -> float:
+def state_of_charge(charger, phone, battery_percentage: float) -> float:
     """
     state_of_charge returns the current battery percentage 
 

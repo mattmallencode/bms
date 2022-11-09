@@ -1,14 +1,16 @@
 import tkinter
 from time import time
 from typing import Type
-
+from ms_modules.metrics import time_till_full, time_till_empty
+from classes.charger import Charger
+import config
 
 """ use properties dont change self.X """
 
 
 # Class representing the state of a phone.
 class Phone:
-    def __init__(self, powered_on: bool, display_on: bool, locked: bool, is_charging: bool, power_draw: float) -> None:
+    def __init__(self, powered_on: bool, display_on: bool, locked: bool, is_charging: bool, power_draw: float, charger) -> None:
         """
         Initializes an instance of the Phone class based on the arguments you pass to this constructor.
 
@@ -25,8 +27,9 @@ class Phone:
         self._display_on = display_on
         self._locked = locked
         self._is_charging = is_charging
-        self._power_draw = 0
+        self._power_draw = power_draw
         self._is_dead = False
+        self._charger = charger
 
         self._root = tkinter.Tk()
         self._root.title("Phone")
@@ -41,7 +44,7 @@ class Phone:
         self._power_button_size = {"x":5, "y":50}
         self._notification_pannel_height = 20
         self._connector_size = {"x":50, "y":100}
-        self._login_button_size = {"x":100, "y":75}
+        self._settings_button_size = {"x":100, "y":75}
         #self._middle_x = self._screen_corners["X2"] - self._screen_corners["X1"]
         #self._middle_y = self._screen_corners["Y2"] - self._screen_corners["Y1"]
 
@@ -51,7 +54,7 @@ class Phone:
         self._power_button_corners = {"X1":self._canvas_size["x"], "Y1":self._bevel_radius+100, "X2":self._canvas_size["x"]+self._power_button_size["x"], "Y2":self._bevel_radius+100+self._power_button_size["y"]}
         self._notification_pannel_corners = {"X1":(self._bevel_radius/5)+self._top_corner["x"], "Y1":(self._bevel_radius*1.5)+self._top_corner["y"], "X2":(self._canvas_size["x"]-(self._bevel_radius/5)), "Y2":(self._bevel_radius*1.5)+self._top_corner["y"]+self._notification_pannel_height}
         self._connector_corners = {"X1":((self._canvas_size["x"]/2)-(self._connector_size["x"]/2)+self._top_corner["x"]/2), "Y1":self._canvas_size["y"], "X2":((self._canvas_size["x"]/2)+(self._connector_size["x"]/2))+self._top_corner["x"]/2, "Y2":(self._canvas_size["y"])+(self._connector_size["x"])}
-        self._login_button = {"X1":((self._canvas_size["x"]/2)-(self._login_button_size["x"]/2)+self._top_corner["x"]/2), "Y1":self._canvas_size["y"]*2/3, "X2":((self._canvas_size["x"]/2)+(self._login_button_size["x"]/2))+self._top_corner["x"]/2, "Y2":(self._canvas_size["y"]*2/3)+self._login_button_size["y"]} 
+        self._settings_button = {"X1":((self._canvas_size["x"]/2)-(self._settings_button_size["x"]/2)+self._top_corner["x"]/2), "Y1":self._canvas_size["y"]*2/3, "X2":((self._canvas_size["x"]/2)+(self._settings_button_size["x"]/2))+self._top_corner["x"]/2, "Y2":(self._canvas_size["y"]*2/3)+self._settings_button_size["y"]} 
 
         self._canvas = tkinter.Canvas(self._root, bg="white", width=self._canvas_size["x"]+self._power_button_size["x"], height=self._canvas_size["y"]+self._connector_size["x"])
         self._canvas.bind("<Button-1>", self._press)
@@ -125,8 +128,8 @@ class Phone:
 
         # Handles button clicks on the "screen" 
         elif self._display_on == True:
-             # Login button pressed
-            if (self._login_button["X1"] < event.x) and (self._login_button["Y1"] < event.y) and (self._login_button["X2"] > event.x) and (self._login_button["Y2"] > event.y) and self._locked:
+             # settings button pressed
+            if (self._settings_button["X1"] < event.x) and (self._settings_button["Y1"] < event.y) and (self._settings_button["X2"] > event.x) and (self._settings_button["Y2"] > event.y) and self._locked:
                 self._locked = False
                 self._home_screen()
 
@@ -147,26 +150,26 @@ class Phone:
         # display ttf plugged in or tte when not
         self._canvas.create_text(self._canvas_size["x"]/2, self._canvas_size["y"]/2, fill="green3", text=self._timetill.get(), font="Helvetica 20")
 
-        # Login button
-        self._canvas.create_rectangle(self._login_button["X1"], self._login_button["Y1"], self._login_button["X2"], self._login_button["Y2"], fill="medium purple", outline="black")
-        self._canvas.create_text(self._login_button["X1"]+(self._login_button_size["x"]/2), self._login_button["Y1"]+(self._login_button_size["y"]/2), fill="pink", text="Login", font="Helvetica 12")
+        # settings button
+        self._canvas.create_rectangle(self._settings_button["X1"], self._settings_button["Y1"], self._settings_button["X2"], self._settings_button["Y2"], fill="medium purple", outline="black")
+        self._canvas.create_text(self._settings_button["X1"]+(self._settings_button_size["x"]/2), self._settings_button["Y1"]+(self._settings_button_size["y"]/2), fill="pink", text="settings", font="Helvetica 12")
 
 
     def _home_screen(self):
         """Handles home screen"""
         self._canvas.create_rectangle(self._screen_corners["X1"], self._screen_corners["Y1"], self._screen_corners["X2"], self._screen_corners["Y2"], fill="steelblue1", outline="black")
-        self._canvas.create_text(self._canvas_size["x"]/2, self._canvas_size["y"]/2, fill="white", text="Battery %\nand\nBattery Health", font="Helvetica 16 bold")
+        self._canvas.create_text(self._canvas_size["x"]/2, self._canvas_size["y"]/2, fill="white", text=f"Battery %\n and Battery Health: {config.lifespan}", font="Helvetica 16 bold")
 
     def _charging_set(self):
         if self._is_charging:
             try:
-                self._timetill.set(time_till_full(charger, self))
+                self._timetill.set(time_till_full(self._charger, self))
             except:
                 self._timetill.set("could not find TTF")
             self._connector = self._canvas.create_rectangle(self._connector_corners["X1"], self._connector_corners["Y1"], self._connector_corners["X2"], self._connector_corners["Y2"], fill="green3", outline="black")
         else:
             try:
-                self._timetill.set(time_till_empty(charger, self))
+                self._timetill.set(time_till_empty(self._charger, self))
             except:
                 self._timetill.set("could not find TTE")
             self._connector = self._canvas.create_rectangle(self._connector_corners["X1"], self._connector_corners["Y1"], self._connector_corners["X2"], self._connector_corners["Y2"], fill="red3", outline="black")
