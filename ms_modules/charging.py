@@ -9,7 +9,7 @@ from classes.phone import Phone
 # Import the time class, we'll need it for the discharge function.
 from time import time
 
-import config 
+import config
 
 
 def decide_charge_mode(charger: Type[Charger]) -> None:
@@ -23,17 +23,16 @@ def decide_charge_mode(charger: Type[Charger]) -> None:
     alters the charge mode in the charger
     '''
     setting: str
-    battery: Type[Battery]
-    battery = charger.battery
-
-    if battery.voltage < config.VOLTAGE_MIN:
+    voltage = charger.report_voltage()
+    current = charger.report_current()
+    if voltage < config.VOLTAGE_MIN:
         setting = "trickle"
     else:
-        if battery.voltage < config.VOLTAGE_MAX:
+        if voltage < config.VOLTAGE_MAX:
             setting = "constant_current"
-        elif battery.voltage >= config.VOLTAGE_MAX:
+        elif voltage >= config.VOLTAGE_MAX:
             setting = "constant_voltage"
-            if battery.current <= config.THRESHOLD:
+            if current <= config.THRESHOLD:
                 setting = "trickle"
     charger.charge_setting = setting
 
@@ -52,7 +51,11 @@ def discharge(battery: Type[Battery], phone: Type[Phone], last_time_discharged: 
     '''
     # Discharge the battery by the power draw times the time_passed.
     new_last_time = time.time()
-    battery.voltage -= phone.power_draw * (last_time_discharged - new_last_time())
+    battery.voltage -= phone.power_draw * \
+        (last_time_discharged - new_last_time())
     return new_last_time
 
     # WE NEED A PHONE DEAD FUNCTION/MODE
+
+def test():
+    print(config.VOLTAGE_MIN)
