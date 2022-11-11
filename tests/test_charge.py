@@ -1,15 +1,15 @@
+from typing import Type
 from unittest import TestCase
 
-# Importing the Charger class
-from classes.charger import Charger
+import config
 # Importing the Battery class 
 from classes.battery import Battery
+# Importing the Charger class
+from classes.charger import Charger
 # Importing the Powerbrick class
 from classes.powerbrick import PowerBrick
 
-from ms_modules.charging import *
-
-import config
+from ms_modules import *
 
 
 class TestChargeModeClass(TestCase):
