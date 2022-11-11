@@ -3,7 +3,7 @@ import math
 
 # Class representing the state of a battery of a phone.
 class Battery:
-    def __init__(self, current: float, voltage: float, temperature: float,  resistance: float, functional_capacity:float) -> None:
+    def __init__(self, current: float, voltage: float, temperature: float,  resistance: float) -> None:
         """
         Initializes an instance of the Battery class based on the arguments you pass to this constructor.
 
@@ -12,7 +12,6 @@ class Battery:
         voltage -- the voltage of the battery.
         temperature -- the temperature of the battery.
         resistance -- the resistance of the battery.
-        functional_capacity - how much charge the battery holds at present. Measured in ampere hours (aH)
         """
 
         # Initialize instance variables based on arguments passed to the constructor.
@@ -20,7 +19,6 @@ class Battery:
         self._voltage = voltage
         self._temperature = temperature
         self._resistance = resistance
-        self._functional_capacity = functional_capacity
 
         # Time 
         self._time = None
@@ -56,14 +54,6 @@ class Battery:
     def _set_resistance(self, resistance) -> None:
         """Updates the resistance of the battery."""
         self._resistance = resistance
-
-    def _get_functional_capacity(self) -> float:
-        """Returns the how much charge is left in the battery"""
-        return self._functional_capacity
-
-    def _set_functional_capacity(self, functional_capacity) -> None:
-        """Updates amount of battery charge left."""
-        self._functional_capacity = functional_capacity
     
     def _get_time(self) -> float:
         return self._time
@@ -85,6 +75,5 @@ class Battery:
     voltage = property(_get_voltage, _set_voltage)
     temperature = property(_get_temperature, _set_temperature)
     resistance = property(_get_resistance, _set_resistance)
-    functional_capacity = property(_get_functional_capacity, _set_functional_capacity)
     time = property(_get_time, _set_time)
     time_last_changed = property(_get_time_last_changed, _set_time_last_changed)
