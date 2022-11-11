@@ -11,3 +11,4 @@ phone = Phone(True, True, True, True, 10, charger)
 while True: 
         phone._root.update_idletasks()
         phone._root.update()
+        charger.affect_of_charging_the_battery()
