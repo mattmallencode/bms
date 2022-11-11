@@ -1,7 +1,7 @@
 # The optimum voltage for this battery, should be trended towards to minimize battery degradation.
 VOLTAGE_NORM: float = 3.6
 # At this voltage the battery is dead, trending towards this voltage indicates a lower capacity.
-VOLTAGE_MIN: float = 3
+VOLTAGE_MIN: float = 3.0
 # If voltage trends towards this value, it leads to degradation.
 VOLTAGE_MAX: float = 4.2
 # Max rate of charge.
@@ -24,3 +24,5 @@ chargepercent: int = 34
 ttf: float = 4.6
 # variable to hold Time Till Empty
 tte: float = 3.4
+# constant for current.
+CURRENT: float = 2

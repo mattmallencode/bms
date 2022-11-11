@@ -63,11 +63,13 @@ class Charger:
         '''
         # Time for the first time.
         if self._battery._time == None:
+            time.sleep(1)
             self._current_time = time.time()
             self._battery.time = self._current_time
             self._battery.time_last_changed = self._current_time
         else:
             # A previous time exists
+            time.sleep(1)
             self._current_time = time.time()
             self._battery.time = self._current_time
         # If the charge setting is "trickle" alter the variables based on the trickle charge.
@@ -116,7 +118,7 @@ class Charger:
             
             # Current
             current = config.CHARGE_C * (math.cos(time_in_constant_voltage / config.CHARGE_C) + config.CHARGE_C)
-            self._battery.current = current
+            self._battery.current = round(current,2)
             self._battery.time_last_changed = self._battery.time
         
         
