@@ -15,9 +15,11 @@ class TestChargingFunctions(TestCase):
         # Create a dummy charger.
         self._charger = Charger(battery, self._power_brick)
 
-    def test_charging_function(self):
-        """ Tests the charging function of the Charger class in classes.
+        self._
+
+
+
+    def charge_battery(self):
         
-            Ensures the CC, CV, TC all work appropriately"""
-        Charger.affect_of_charging_the_battery(self)
+     
 
