@@ -111,7 +111,7 @@ class Charger:
             self.voltage = PowerBrick.voltage
             print("Voltage: ", self.voltage)
             # Current
-            current = config.CHARGE_C(math.cos(time_in_constant_voltage / config.CHARGE_C) + config.CHARGE_C)
+            current = config.CHARGE_C * (math.cos(time_in_constant_voltage / config.CHARGE_C) + config.CHARGE_C)
             self.current = current
             print("Current: ", self.current)
         
