@@ -3,7 +3,7 @@ import math
 
 # Class representing the state of a battery of a phone.
 class Battery:
-    def __init__(self, current: float, voltage: float, temperature: float,  resistance: float) -> None:
+    def __init__(self, current: float, voltage: float, temperature: float,  resistance: float, functional_capacity:float) -> None:
         """
         Initializes an instance of the Battery class based on the arguments you pass to this constructor.
 
@@ -20,7 +20,8 @@ class Battery:
         self._voltage = voltage
         self._temperature = temperature
         self._resistance = resistance
-        
+        self._functional_capacity = functional_capacity
+
         # Time 
         self._time = None
         self._time_last_changed = None
@@ -58,11 +59,11 @@ class Battery:
 
     def _get_functional_capacity(self) -> float:
         """Returns the how much charge is left in the battery"""
-        return self._charge
+        return self._functional_capacity
 
-    def _set_functional_capacity(self, charge) -> None:
+    def _set_functional_capacity(self, functional_capacity) -> None:
         """Updates amount of battery charge left."""
-        self._charge = charge
+        self._functional_capacity = functional_capacity
     
     def _get_time(self) -> float:
         return self._time
