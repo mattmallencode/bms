@@ -58,7 +58,7 @@ class Charger:
     charge_setting = property(_get_charge_setting, _set_charge_setting)
     c_rate = property(_get_c_rate, _set_c_rate)
 
-    def affect_of_charging_the_battery(self) -> None:
+    def charge_battery(self) -> None:
         ''' Charging the battery will affect the variables within the battery. 
         In this case it is current and voltage. The varibales are altered differently based on the charge state.
         '''
