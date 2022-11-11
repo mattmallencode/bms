@@ -4,7 +4,7 @@ from classes.battery import Battery
 from classes.phone import Phone
 
 power_brick = PowerBrick(15, 15)
-battery = Battery(10, 10, 10, 10)
+battery = Battery(10, 10, 10, 10, 1200)
 charger = Charger(battery, power_brick)
 phone = Phone(True, True, True, True, 10, charger)
 
