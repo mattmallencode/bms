@@ -1,5 +1,5 @@
 from unittest import TestCase
-import time
+from time import time
 
 # Importing the phone class
 from classes.phone import Phone
@@ -19,46 +19,51 @@ import config
 
 class TestChargeModeClass(TestCase):
 
-    def __init__(self):
-        # Create a dummy power brick.
-        self.power_brick = PowerBrick(15, 15)
-        # Create a dummy battery.
-        self.battery = Battery(10, 10, 10, 10)
-        # Create a dummy charger.
-        self.charger = Charger(self.battery, self.power_brick)
-        # Create a dummy phone instance.
-        p = Phone(False, False, True, False, 5.0, self.charger)
-
     def test_DecideChargeMode(self):
-        self.battery.voltage = config.VOLTAGE_MIN-1
-        decide_charge_mode(self.charger)
-        self.assertEqual(self.charger.charge_setting, "trickle")
+        # Create a dummy power brick.
+        power_brick = PowerBrick(15, 15)
+        # Create a dummy battery.
+        battery = Battery(10, 10, 10, 10)
+        # Create a dummy charger.
+        charger = Charger(battery, power_brick)
+        # Create a dummy phone instance.
+        p = Phone(False, False, True, False, 5.0, charger)
 
-        self.battery.voltage = config.VOLTAGE_MIN+1
-        decide_charge_mode(self.charger)
-        self.assertEqual(self.charger.charge_setting, "constant_current")
+        battery.voltage = config.VOLTAGE_MIN-1
+        decide_charge_mode(charger)
+        self.assertEqual(charger.charge_setting, "trickle")
 
-        self.battery.voltage = config.VOLTAGE_MAX
-        decide_charge_mode(self.charger)
-        self.assertEqual(self.charger.charge_setting, "constant_voltage")
+        battery.voltage = config.VOLTAGE_MIN+1
+        decide_charge_mode(charger)
+        self.assertEqual(charger.charge_setting, "constant_current")
 
-        self.battery.voltage = config.VOLTAGE_MAX+1
-        decide_charge_mode(self.charger)
-        self.assertEqual(self.charger.charge_setting, "constant_voltage")
+        battery.voltage = config.VOLTAGE_MAX
+        decide_charge_mode(charger)
+        self.assertEqual(charger.charge_setting, "constant_voltage")
 
-        self.battery.current = config.THRESHOLD
-        decide_charge_mode(self.charger)
-        self.assertEqual(self.charger.charge_setting, "trickle")
+        battery.voltage = config.VOLTAGE_MAX+1
+        decide_charge_mode(charger)
+        self.assertEqual(charger.charge_setting, "constant_voltage")
 
-        self.battery.current = config.THRESHOLD-1
-        decide_charge_mode(self.charger)
-        self.assertEqual(self.charger.charge_setting, "trickle")
+        battery.current = config.THRESHOLD
+        decide_charge_mode(charger)
+        self.assertEqual(charger.charge_setting, "trickle")
+
+        battery.current = config.THRESHOLD-1
+        decide_charge_mode(charger)
+        self.assertEqual(charger.charge_setting, "trickle")
 
 
     def test_discharge(self):
-        discharge(self.battery, self.p, time.time()-100)
-        last_voltage = self.battery.voltage
-        self.assertLess(self.charger.charge_setting, last_voltage)
-        
-if __name__ == '__main__':
-    unittest.main()
+        # Create a dummy power brick.
+        power_brick = PowerBrick(15, 15)
+        # Create a dummy battery.
+        battery = Battery(10, 10, 10, 10)
+        # Create a dummy charger.
+        charger = Charger(battery, power_brick)
+        # Create a dummy phone instance.
+        p = Phone(False, False, True, False, 5.0, charger)
+
+        last_voltage = battery.voltage
+        discharge(battery, p, time()-100)        
+        self.assertLess(battery.voltage, last_voltage)

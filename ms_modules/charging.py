@@ -50,9 +50,9 @@ def discharge(battery: Type[Battery], phone: Type[Phone], last_time_discharged: 
     Returns the new time stanp to be passed as "last_time_discharged" the next time discharge is called.
     '''
     # Discharge the battery by the power draw times the time_passed.
-    new_last_time = time.time()
+    new_last_time = time()
     battery.voltage -= phone.power_draw * \
-        (last_time_discharged - new_last_time())
+        (last_time_discharged - new_last_time)
     return new_last_time
 
     # WE NEED A PHONE DEAD FUNCTION/MODE
