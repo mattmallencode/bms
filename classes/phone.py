@@ -132,9 +132,12 @@ class Phone:
             return self.is_charging
             
         # home button
-        elif (self._home_button_corners["X1"] < event.x) and (self._home_button_corners["Y1"] < event.y) and (self._home_button_corners["X2"] > event.x) and (self._home_button_corners["Y2"] > event.y) and self._powered_on and self._locked:
+        elif (self._home_button_corners["X1"] < event.x) and (self._home_button_corners["Y1"] < event.y) and (self._home_button_corners["X2"] > event.x) and (self._home_button_corners["Y2"] > event.y) and self._powered_on:
             if self._display_on == True:
                 self.display_on = False
+                self._locked = True
+                self._settings = False
+                
             else:
                 self._display_on = True
             self._screen_state()
