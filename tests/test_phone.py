@@ -47,14 +47,25 @@ class TestPhoneClass(TestCase):
         # First we must power the phone on.
         mouse_click = ClickEvent(p._power_button_corners["X1"] + 1, p._power_button_corners["Y1"] + 1)
         p._press(mouse_click)
+        # then hit te home button to turn the screen on then off
         mouse_click = ClickEvent(p._home_button_corners["X1"] + 1, p._home_button_corners["Y1"] + 1)
         p._press(mouse_click)
         self.assertEqual(p.display_on, True)
         p._press(mouse_click)
         self.assertEqual(p.display_on, False)
-        
-        # Now to test the "unlock" -> must turn display back on first.
+
+        # Now to test the "unlock" and "lock" -> must turn display back on first.
         mouse_click = ClickEvent(p._home_button_corners["X1"] + 1, p._home_button_corners["Y1"] + 1)
         p._press(mouse_click)
         mouse_click = ClickEvent(p._unlock_button["X1"] + 1, p._unlock_button["Y1"] + 1)
         self.assertEqual(p.locked, True)
+        p._press(mouse_click)
+        self.assertEqual(p.locked, False)
+
+        # Now for the settings screen -> display must be on and phone must be unlocked
+        mouse_click = ClickEvent(p._settings_button["X1"] + 1, p._settings_button["Y1"] + 1)
+        self.assertEqual(p._settings, False)
+        p._press(mouse_click)
+        self.assertEqual(p._settings, True)
+        p._press(mouse_click)
+        self.assertEqual(p._settings, False)
