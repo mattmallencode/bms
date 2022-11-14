@@ -26,7 +26,7 @@ class Charger:
         # c rate should be assigned from the config.py
         self._c_rate = None
 
-        self._current_time = time.time()
+        self._current_time = time()
 
 
     def _get_charge_setting(self) -> str:
@@ -36,16 +36,16 @@ class Charger:
         self._charge_setting = setting
 
     def report_temperature(self) -> float:
-        return self._battery.temperature
+        return self._battery._temperature
     
     def report_voltage(self) -> float:
-        return self._battery.voltage
+        return self._battery._voltage
 
     def report_current(self) -> float:
-        return self._battery.current
+        return self._battery._current
     
     def report_resistance(self) -> float:
-        return self._battery.resistance
+        return self._battery._resistance
 
     def _get_c_rate(self) -> float:
         return self._c_rate
@@ -76,7 +76,6 @@ class Charger:
             # Assume it has been charging in trickle charge for that length of time.
             # Modify the variables accordingly 
             time_in_trickle_charge = self._battery.time - self._battery.time_last_changed
-            print(time_in_trickle_charge)
             # apply the formulas to the varibles for the duration that they were affected
 
             # the voltage
@@ -94,7 +93,6 @@ class Charger:
             # Assume it has been charging with constant current for that length of time.
             # Modify the variables accordingly 
             time_in_constant_current = self._battery.time - self._battery.time_last_changed
-            print(time_in_constant_current)
             # Apply the voltage formula for constant current
             new_voltage = (1.0 / config.CHARGE_C) * time_in_constant_current ** 2
             self._battery.voltage = new_voltage
@@ -109,7 +107,6 @@ class Charger:
             # Assume it has been charging with constant voltage for that length of time.
             # Modify the variables accordingly 
             time_in_constant_voltage = self._battery.time - self._battery.time_last_changed
-            print(time_in_constant_voltage)
             # Apply the voltage formula for constant voltage
             # Voltage
             self._battery.voltage = PowerBrick.voltage
