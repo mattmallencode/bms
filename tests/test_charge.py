@@ -1,7 +1,8 @@
-from typing import Type
 from unittest import TestCase
+from time import time
 
-import config
+# Importing the phone class
+from classes.phone import Phone
 # Importing the Battery class 
 from classes.battery import Battery
 # Importing the Charger class
@@ -9,7 +10,11 @@ from classes.charger import Charger
 # Importing the Powerbrick class
 from classes.powerbrick import PowerBrick
 
-from ms_modules import *
+# importing the functions that get tested
+from ms_modules.charging import decide_charge_mode, discharge
+
+# Import all from config.py
+import config 
 
 
 class TestChargeModeClass(TestCase):
@@ -21,29 +26,31 @@ class TestChargeModeClass(TestCase):
         battery = Battery(10, 10, 10, 10)
         # Create a dummy charger.
         charger = Charger(battery, power_brick)
+        # Create a dummy phone instance.
+        p = Phone(False, False, True, False, 5.0, charger)
 
         battery.voltage = config.VOLTAGE_MIN-1
-        ms_modules.decide_charge_mode(charger)
+        decide_charge_mode(charger)
         self.assertEqual(charger.charge_setting, "trickle")
 
         battery.voltage = config.VOLTAGE_MIN+1
-        ms_modules.decide_charge_mode(charger)
+        decide_charge_mode(charger)
         self.assertEqual(charger.charge_setting, "constant_current")
 
         battery.voltage = config.VOLTAGE_MAX
-        ms_modules.decide_charge_mode(charger)
+        decide_charge_mode(charger)
         self.assertEqual(charger.charge_setting, "constant_voltage")
 
         battery.voltage = config.VOLTAGE_MAX+1
-        ms_modules.decide_charge_mode(charger)
+        decide_charge_mode(charger)
         self.assertEqual(charger.charge_setting, "constant_voltage")
 
         battery.current = config.THRESHOLD
-        ms_modules.decide_charge_mode(charger)
+        decide_charge_mode(charger)
         self.assertEqual(charger.charge_setting, "trickle")
 
         battery.current = config.THRESHOLD-1
-        ms_modules.decide_charge_mode(charger)
+        decide_charge_mode(charger)
         self.assertEqual(charger.charge_setting, "trickle")
 
 
@@ -57,9 +64,6 @@ class TestChargeModeClass(TestCase):
         # Create a dummy phone instance.
         p = Phone(False, False, True, False, 5.0, charger)
 
-        ms_modules.discharge(battery, p, time.time()-100)
         last_voltage = battery.voltage
-        self.assertLess(charger.charge_setting, last_voltage)
-        
-
-
+        discharge(battery, p, time()-100)        
+        self.assertLess(battery.voltage, last_voltage)
