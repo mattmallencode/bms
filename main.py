@@ -27,3 +27,6 @@ while True:
         state_of_charge(charger, phone, config.chargepercent, time_since_last_charge, config.CAPACITY * config.lifespan)
         time_till_empty(phone, config.chargepercent, config.CAPACITY * config.lifespan)
         time_till_full(charger, config.chargepercent, config.CAPACITY * config.lifespan)
+
+
+
