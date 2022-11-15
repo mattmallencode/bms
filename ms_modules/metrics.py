@@ -10,7 +10,7 @@ def time_till_full(charger, battery_percentage, functional_capacity) -> float:
     """
     time_till_full returns the time (in hours) until the battery is fully charged from its current battery discharged
     """
-    ttf_from_empty = functional_capacity / charger.report_current()
+    ttf_from_empty = (functional_capacity/1000) / charger.report_current()
     ttf = ttf_from_empty * ((100 - battery_percentage)/100)
     return ttf 
   
@@ -19,7 +19,7 @@ def time_till_empty(charger, phone, battery_percentage, functional_capacity) -> 
     """
     time_till_empty returns the time (in hours) until the battery is fully discharged from its current battery percentage
     """
-    tte_from_full = functional_capacity / phone.power_draw
+    tte_from_full = (functional_capacity/1000) / phone.power_draw
     tte = tte_from_full * (battery_percentage/100)
     return tte
 
