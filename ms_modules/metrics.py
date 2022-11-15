@@ -43,7 +43,7 @@ def state_of_charge(charger, phone, battery_percentage, time_since_last_soc_calc
     # updates the time since the last soc calculation to the current time
     time_since_last_soc_calculation = time_now
     # calculates the state of charge
-    soc = battery_percentage + ((i/functional_capacity) * time_step)
+    soc = battery_percentage + ((i/(functional_capacity / 1000)) * time_step)
     # sets the battery percentage equal to the newly calculated battery percentage
     config.battery_percentage = soc
 

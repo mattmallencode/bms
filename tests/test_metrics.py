@@ -9,7 +9,7 @@ from ms_modules.metrics import state_of_charge, time_till_empty, time_till_full
 
 
 class TestMetricsModule(TestCase):
-    battery = Battery(10.0, 10.0, 10.0, 10.0)
+    battery = Battery(10.0, 10.0)
     powerbrick = PowerBrick(20.0, 20.0)
     charger = Charger(battery, powerbrick)
     phone = Phone(False, False, True, False, 10.0, charger)

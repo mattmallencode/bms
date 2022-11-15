@@ -14,7 +14,7 @@ class TestChargingModule(TestCase):
         # Create a dummy power brick.
         power_brick = PowerBrick(2, 5)
         # Create a dummy battery.
-        battery = Battery(10, 10, 10, 10)
+        battery = Battery(10, 10)
         # Create dummy charger instance
         charger = Charger(battery, power_brick)
 

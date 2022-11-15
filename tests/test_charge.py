@@ -23,7 +23,7 @@ class TestChargeModeClass(TestCase):
         # Create a dummy power brick.
         power_brick = PowerBrick(15, 15)
         # Create a dummy battery.
-        battery = Battery(10, 10, 10, 10)
+        battery = Battery(10, 10)
         # Create a dummy charger.
         charger = Charger(battery, power_brick)
         # Create a dummy phone instance.
