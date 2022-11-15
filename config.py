@@ -9,8 +9,6 @@ CHARGE_C: float = 1
 DISCHARGE_C: float = 1
 # The threshold of the current when battery is fully charged
 THRESHOLD: float = 0.05
-# The temperature at which the battery will keep increasing in temperature and go on fire.
-THERMAL_RUNAWAY: float = 105
 # The battery's status, either dead or alive. 
 BATTERY_ALIVE: bool = True
 # The original capacity of the battery.

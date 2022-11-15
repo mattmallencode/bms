@@ -34,18 +34,12 @@ class Charger:
 
     def _set_charge_setting(self, setting) -> None:
         self._charge_setting = setting
-
-    def report_temperature(self) -> float:
-        return self._battery._temperature
     
     def report_voltage(self) -> float:
         return self._battery._voltage
 
     def report_current(self) -> float:
         return self._battery._current
-    
-    def report_resistance(self) -> float:
-        return self._battery._resistance
 
     def _get_c_rate(self) -> float:
         return self._c_rate
