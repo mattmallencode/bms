@@ -209,7 +209,7 @@ class Phone:
     def _settings_screen(self):
         """Handles settings screen"""
         self._canvas.create_rectangle(self._screen_corners["X1"], self._screen_corners["Y1"], self._screen_corners["X2"], self._screen_corners["Y2"], fill="green yellow", outline="black")
-        self._canvas.create_text(self._canvas_size["x"]/2, self._canvas_size["y"]/2, fill="black", text=f"Battery at {round(config.chargepercent, 4)}%\n\nBattery Health: {config.lifespan}", font="Helvetica 16 bold")
+        self._canvas.create_text(self._canvas_size["x"]/2, self._canvas_size["y"]/2, fill="black", text=f"Battery at {round(config.chargepercent, 2)}%\n\nBattery Health: {config.lifespan}", font="Helvetica 16 bold")
 
         # return button
         self._canvas.create_rectangle(self._settings_return_button["X1"], self._settings_return_button["Y1"], self._settings_return_button["X2"], self._settings_return_button["Y2"], fill="thistle1", outline="black")
@@ -217,10 +217,10 @@ class Phone:
 
     def _charging_set(self):
         if self._is_charging:
-            self._timetill.set(f"the current time till full is {self._hours_minutes_seconds(config.ttf)} hours")
+            self._timetill.set(f"battery full in\n {self._hours_minutes_seconds(config.ttf)} hours")
             self._connector = self._canvas.create_rectangle(self._connector_corners["X1"], self._connector_corners["Y1"], self._connector_corners["X2"], self._connector_corners["Y2"], fill="green3", outline="black")
         else:
-            self._timetill.set(f"the current time till empty is {self._hours_minutes_seconds(config.tte)} hours")
+            self._timetill.set(f"battery dead in\n {self._hours_minutes_seconds(config.tte)} hours")
             self._connector = self._canvas.create_rectangle(self._connector_corners["X1"], self._connector_corners["Y1"], self._connector_corners["X2"], self._connector_corners["Y2"], fill="red3", outline="black")
         self._screen_state()
 
