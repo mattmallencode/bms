@@ -60,10 +60,11 @@ class Charger:
         # the maximum voltage possible.
         voltage_max = self._powerbrick.voltage
         # Apply the voltage formula for trickle charge
-        new_voltage = (voltage_max / 1000) * time_in_trickle_charge
-        self._battery.voltage = new_voltage
+        voltage_in = (voltage_max / 1000) * time_in_trickle_charge
+        # Accumulating the voltage over time in the battery
+        self._battery.voltage = voltage_in + self._battery.voltage
         # The current is 1/100 of the normal current in trickle charge
-        self._battery.current = self._powerbrick.current/100 
+        self._battery.current = self._powerbrick.current / 100 
         # set the last time the function was called to the curretn time for when the charge_battery() function is called next
         self._battery.time_last_changed = self._battery.time
 
@@ -73,8 +74,9 @@ class Charger:
         time_in_constant_current = self._battery.time - self._battery.time_last_changed
         print(time_in_constant_current)
         # Apply the voltage formula for constant current
-        new_voltage = (1.0 / config.CHARGE_C) * time_in_constant_current ** 2
-        self._battery.voltage = new_voltage
+        voltage_in = (1.0 / config.CHARGE_C) * time_in_constant_current ** 2
+        # Accumulating the voltage over time in the battery
+        self._battery.voltage = voltage_in + self._battery.voltage
         # Current
         self._battery.current = config.CHARGE_C
         self._battery.time_last_changed = self._battery.time
@@ -84,7 +86,9 @@ class Charger:
             For the duration of time the battery spent in the constant voltage charge method.'''
         time_in_constant_voltage = self._battery.time - self._battery.time_last_changed
         # Apply the voltage formula for constant voltage
-        self._battery.voltage = self._powerbrick.voltage
+        voltage_in = self._powerbrick.voltage * time_in_constant_voltage
+        # Accumulating the voltage over time in the battery
+        self._battery.voltage = voltage_in + self._battery.voltage
         # Apply the current formula for constant voltage
         self._battery.current = config.CHARGE_C * (math.cos(time_in_constant_voltage / config.CHARGE_C) + config.CHARGE_C)
         self._battery.time_last_changed = self._battery.time

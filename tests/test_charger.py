@@ -12,7 +12,7 @@ class TestChargingModule(TestCase):
     def test_charging_function(self):
         ''' This function tests if the charging functions constant current, constant voltage and trickle charge are functioning correctly.'''
         # Create a dummy power brick.
-        power_brick = PowerBrick(15, 15)
+        power_brick = PowerBrick(2, 5)
         # Create a dummy battery.
         battery = Battery(10, 10, 10, 10)
         # Create dummy charger instance
@@ -27,6 +27,8 @@ class TestChargingModule(TestCase):
         #call the charge battery function
         charger.charge_battery()
         self.assertGreater(battery.voltage, last_voltage)
+        # Test for the current in trickle charge
+        self.assertAlmostEqual(power_brick.current, power_brick.current / 100)
 
         # Constant current
         battery.voltage = config.VOLTAGE_MIN+1
