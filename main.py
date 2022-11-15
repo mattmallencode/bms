@@ -5,8 +5,8 @@ from classes.powerbrick import PowerBrick
 from ms_modules.charging import decide_charge_mode
 import config
 
-power_brick = PowerBrick(config.CURRENT, 5)
-battery = Battery(0, 3.8)
+power_brick = PowerBrick(config.POWER_BRICK_CURRENT, config.POWER_BRICK_VOLTAGE)
+battery = Battery(0, 3.6)
 charger = Charger(battery, power_brick)
 phone = Phone(True, True, True, True, 10, charger)
 
