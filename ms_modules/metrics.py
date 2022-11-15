@@ -22,7 +22,7 @@ def time_till_empty(phone, battery_percentage, functional_capacity) -> float:
     """
     tte_from_full = (functional_capacity/1000) / phone.power_draw
     tte = tte_from_full * (battery_percentage/100)
-    config.tte
+    config.tte = tte
     return tte
 
 
