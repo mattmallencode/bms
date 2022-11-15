@@ -6,12 +6,13 @@ from classes.charger import Charger
 from classes.phone import Phone
 from classes.powerbrick import PowerBrick
 from ms_modules.metrics import state_of_charge, time_till_empty, time_till_full
+import config
 
 
 class TestMetricsModule(TestCase):
-    battery = Battery(10.0, 10.0)
-    powerbrick = PowerBrick(20.0, 20.0)
-    charger = Charger(battery, powerbrick)
+    battery = Battery(10, 3.6)
+    power_brick = PowerBrick(config.POWER_BRICK_CURRENT, config.POWER_BRICK_VOLTAGE)
+    charger = Charger(battery, power_brick)
     phone = Phone(False, False, True, False, 10.0, charger)
 
     def test_time_till_full(self):
@@ -41,7 +42,7 @@ class TestMetricsModule(TestCase):
         # sleep for 30 seconds to obtain a noticeable change in the SoC value
         sleep(30)
         #calculate soc
-        soc = state_of_charge(self.charger, self.phone, self.battery_percentage, self.time_since_last_soc_calulation, self.functional_capacity)
+        soc = state_of_charge(self.charger, self.phone, self.battery_percentage, self.functional_capacity)
         soc = round(soc, 2)
         # check if soc value equal to expected result
         self.assertAlmostEqual(soc, 60.25)
@@ -55,14 +56,7 @@ class TestMetricsModule(TestCase):
         # sleep for 30 seconds to obtain a noticeable change in the SoC value
         sleep(30)
         #calculate soc
-        soc = state_of_charge(self.charger, self.phone, self.battery_percentage, self.time_since_last_soc_calulation, self.functional_capacity)
+        soc = state_of_charge(self.charger, self.phone, self.battery_percentage, self.functional_capacity)
         soc = round(soc, 2)
         # check if soc value equal to expected result
         self.assertAlmostEqual(soc, 59.75)
-
-
-
-
-        
-        
-
