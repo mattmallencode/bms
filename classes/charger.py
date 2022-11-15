@@ -72,7 +72,7 @@ class Charger:
         ''' This is the function that calculates the voltage and current of the battery 
             For the duration of time the battery spent in the constant current charge method.''' 
         time_in_constant_current = self._battery.time - self._battery.time_last_changed
-        print(time_in_constant_current)
+        #print(time_in_constant_current)
         # Apply the voltage formula for constant current
         voltage_in = (1.0 / config.CHARGE_C) * time_in_constant_current ** 2
         # Accumulating the voltage over time in the battery
