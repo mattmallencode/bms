@@ -72,7 +72,7 @@ class Battery:
     # This means private instance variables can be accessed "directly" by using the getters and setters as an interface.
     # E.g. my_battery.is_charging = False calls _set_is_charging(False) under the hood.
     current = property(_get_current, _set_current)
-    # voltage = property(_get_voltage, _set_voltage)
+    voltage = property(_get_voltage, _set_voltage)
     temperature = property(_get_temperature, _set_temperature)
     resistance = property(_get_resistance, _set_resistance)
     time = property(_get_time, _set_time)

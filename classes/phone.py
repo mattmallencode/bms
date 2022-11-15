@@ -105,7 +105,7 @@ class Phone:
             self._off_screen()
 
     def _press(self, event):
-        print("powered_on", self._powered_on, "|display_on", self.display_on, "|locked", self._locked, "|is_charging", self._is_charging, "|power_draw", self._power_draw, "|settings", self._settings)
+        #print("powered_on", self._powered_on, "|display_on", self.display_on, "|locked", self._locked, "|is_charging", self._is_charging, "|power_draw", self._power_draw, "|settings", self._settings)
 
         """ Handles clicks on the canvas """
         # power button
@@ -172,7 +172,7 @@ class Phone:
                 self._home_screen()
                 return self.locked
 
-        print("powered_on", self._powered_on, "|display_on", self.display_on, "|locked", self._locked, "|is_charging", self._is_charging, "|power_draw", self._power_draw)
+        #print("powered_on", self._powered_on, "|display_on", self.display_on, "|locked", self._locked, "|is_charging", self._is_charging, "|power_draw", self._power_draw)
 
     def _off_screen(self):
         self._canvas.create_rectangle(self._screen_corners["X1"], self._screen_corners["Y1"], self._screen_corners["X2"], self._screen_corners["Y2"], fill="grey10", outline="black")

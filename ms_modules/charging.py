@@ -52,10 +52,7 @@ def discharge(battery: Type[Battery], phone: Type[Phone], last_time_discharged: 
     # Discharge the battery by the power draw times the time_passed.
     new_last_time = time()
     battery.voltage -= phone.power_draw * \
-        (last_time_discharged - new_last_time)
+        (new_last_time - last_time_discharged)
     return new_last_time
 
     # WE NEED A PHONE DEAD FUNCTION/MODE
-
-def test():
-    print(config.VOLTAGE_MIN)
