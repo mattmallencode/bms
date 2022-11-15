@@ -17,10 +17,10 @@ class TestChargingModule(TestCase):
         battery = Battery(10, 10, 10, 10)
         # Create dummy charger instance
         charger = Charger(battery, power_brick)
+
         
         
         # Trickle charge
-        battery.voltage = config.VOLTAGE_MIN-1
         last_voltage = battery.voltage
         
         charger.charge_setting = "trickle"
@@ -31,21 +31,25 @@ class TestChargingModule(TestCase):
         self.assertAlmostEqual(power_brick.current, power_brick.current / 100)
 
         # Constant current
-        battery.voltage = config.VOLTAGE_MIN+1
         last_voltage = battery.voltage
-        charger.charge_setting = "constant_current"
-        # Constant current
-        self.assertGreater(battery.voltage, last_voltage)
 
+        charger.charge_setting = "constant_current"
+        #call the charge battery function
+        charger.charge_battery()
+        # Constant current voltage
+        self.assertGreater(battery.voltage, last_voltage)
+        # Constant current 
+        self.assertAlmostEqual(config.CHARGE_C, power_brick.current)
 
         # Constant voltage
-        battery.voltage = config.VOLTAGE_MAX+1
         last_voltage = battery.voltage
-        battery.current = config.THRESHOLD
+        initial_current = battery.current
+        
         charger.charge_setting = "constant_voltage"
         charger.charge_battery()
         # Constant current
         self.assertGreater(battery.voltage, last_voltage)
+        self.assertLessEqual(battery.current, initial_current)
         
 
         

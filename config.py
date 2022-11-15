@@ -24,5 +24,7 @@ chargepercent: int = 34
 ttf: float = 4.6
 # variable to hold Time Till Empty
 tte: float = 3.4
-# constant for current.
-CURRENT: float = 2
+# constant for current from power brick.
+POWER_BRICK_CURRENT: int = 2
+# constant for voltage from power brick.
+POWER_BRICK_VOLTAGE: int = 5
