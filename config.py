@@ -12,7 +12,7 @@ THRESHOLD: float = 0.05
 # The battery's status, either dead or alive. 
 BATTERY_ALIVE: bool = True
 # The original capacity of the battery.
-CAPACITY: float = 4352
+CAPACITY: float = 2600
 # Estimate of how many full charge and discharge cycles the battery can handle before it begins to lose functional capacity.
 lifespan: float = 1
 # variable to hold charge percent
