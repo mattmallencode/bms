@@ -8,13 +8,6 @@ import config
 import time
 
 class TestChargingModule(TestCase):
-    # Create a dummy power brick.
-    power_brick = PowerBrick(15, 15)
-    # Create a dummy battery.
-    battery = Battery(10, 10, 10, 10)
-    # Create dummy charger
-    charger = Charger(battery, power_brick)
-    
 
     def test_charging_function(self):
         ''' This function tests if the charging functions constant current, constant voltage and trickle charge are functioning correctly.'''

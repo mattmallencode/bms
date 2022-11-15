@@ -26,7 +26,7 @@ class Charger:
         # c rate should be assigned from the config.py
         self._c_rate = None
 
-        self._current_time = time.time()
+        self._current_time = time()
 
 
     def _get_charge_setting(self) -> str:
@@ -36,16 +36,16 @@ class Charger:
         self._charge_setting = setting
 
     def report_temperature(self) -> float:
-        return self._battery.temperature
+        return self._battery._temperature
     
     def report_voltage(self) -> float:
-        return self._battery.voltage
+        return self._battery._voltage
 
     def report_current(self) -> float:
-        return self._battery.current
+        return self._battery._current
     
     def report_resistance(self) -> float:
-        return self._battery.resistance
+        return self._battery._resistance
 
     def _get_c_rate(self) -> float:
         return self._c_rate
@@ -118,5 +118,4 @@ class Charger:
         # If the charge setting is "constant_voltage" alter the variables based on the constant voltage.
         else:
             self.constant_voltage()
-        
-        
+          
