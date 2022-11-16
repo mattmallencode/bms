@@ -26,3 +26,6 @@ tte: float = 3.4
 POWER_BRICK_CURRENT: int = 2
 # constant for voltage from power brick.
 POWER_BRICK_VOLTAGE: int = 5
+# variable to hold time since the last state of charge was calculated
+from time import time
+time_since_last_soc_calculation = time()
