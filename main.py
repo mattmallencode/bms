@@ -4,6 +4,7 @@ from classes.phone import Phone
 from classes.powerbrick import PowerBrick
 from ms_modules.charging import decide_charge_mode, discharge
 from ms_modules.metrics import state_of_charge, time_till_empty, time_till_full
+from ms_modules.health import adjust_lifespan
 import config
 from time import time
 
@@ -29,7 +30,10 @@ while True:
         if phone.powered_on == True:
             if last_time_discharged == None:
                 last_time_discharged = time()
+            soc_before = state_of_charge(charger, phone, config.chargepercent, time_since_last_charge, config.CAPACITY * config.lifespan)
             discharge(battery, phone, last_time_discharged)
+            soc_after = state_of_charge(charger, phone, config.chargepercent, time_since_last_charge, config.CAPACITY * config.lifespan)
+            adjust_lifespan(soc_after -soc_before)
             last_time_discharged = time()
             if phone.locked and phone.is_charging == True:
                 time_till_full(charger, config.chargepercent, config.CAPACITY * config.lifespan)

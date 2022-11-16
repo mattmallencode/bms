@@ -209,7 +209,7 @@ class Phone:
     def _settings_screen(self):
         """Handles settings screen"""
         self._canvas.create_rectangle(self._screen_corners["X1"], self._screen_corners["Y1"], self._screen_corners["X2"], self._screen_corners["Y2"], fill="green yellow", outline="black")
-        self._canvas.create_text(self._canvas_size["x"]/2, self._canvas_size["y"]/2, fill="black", text=f"Battery at {round(config.chargepercent, 2)}%\n\nBattery Health: {config.lifespan}", font="Helvetica 16 bold")
+        self._canvas.create_text(self._canvas_size["x"]/2, self._canvas_size["y"]/2, fill="black", text=f"Battery at {round(config.chargepercent, 2)}%\n\nBattery Health: {round(config.lifespan, 2)}", font="Helvetica 16 bold")
 
         # return button
         self._canvas.create_rectangle(self._settings_return_button["X1"], self._settings_return_button["Y1"], self._settings_return_button["X2"], self._settings_return_button["Y2"], fill="thistle1", outline="black")
