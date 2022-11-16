@@ -15,27 +15,31 @@ last_time_discharged = None
 
 
 config.chargepercent = ((3.6 - config.VOLTAGE_MIN) * 100)/ (config.VOLTAGE_MAX - config.VOLTAGE_MIN)
-config.ttf = time_till_full(charger, config.chargepercent, config.CAPACITY * config.lifespan)
+config.ttf = time_till_full(charger)
 phone = Phone(True, True, True, True, 0.01, charger)
-config.tte = time_till_empty(phone, config.chargepercent, config.CAPACITY * config.lifespan)
-
+config.tte = time_till_empty(phone)
+"""
 while True: 
         phone._root.update_idletasks()
         phone._root.update()
         if phone.is_charging == True:
             decide_charge_mode(charger)
             charger.charge_battery()
-            state_of_charge(charger, phone, config.chargepercent, config.CAPACITY * config.lifespan)
+            state_of_charge(charger, phone)
         if phone.powered_on == True:
             if last_time_discharged == None:
                 last_time_discharged = time()
-            soc_before = state_of_charge(charger, phone, config.chargepercent, config.CAPACITY * config.lifespan)
+            soc_before = state_of_charge(charger, phone)
             discharge(battery, phone, last_time_discharged)
-            soc_after = state_of_charge(charger, phone, config.chargepercent, config.CAPACITY * config.lifespan)
+            soc_after = state_of_charge(charger, phone)
             adjust_lifespan(soc_after -soc_before)
             last_time_discharged = time()
             if phone.locked and phone.is_charging == True:
-                time_till_full(charger, config.chargepercent, config.CAPACITY * config.lifespan)
+                time_till_full(charger)
             if phone.locked and phone.is_charging == False:
-                time_till_empty(phone, config.chargepercent, config.CAPACITY * config.lifespan)
+                time_till_empty(phone)
         print(charger.report_current(), phone.power_draw)
+"""
+
+from tests.test_metrics import TestMetricsModule
+test = TestMetricsModule()
