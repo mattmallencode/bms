@@ -18,7 +18,7 @@ config.chargepercent = ((3.6 - config.VOLTAGE_MIN) * 100)/ (config.VOLTAGE_MAX -
 config.ttf = time_till_full(charger)
 phone = Phone(True, True, True, True, 0.01, charger)
 config.tte = time_till_empty(phone)
-"""
+
 while True: 
         phone._root.update_idletasks()
         phone._root.update()
@@ -39,7 +39,3 @@ while True:
             if phone.locked and phone.is_charging == False:
                 time_till_empty(phone)
         print(charger.report_current(), phone.power_draw)
-"""
-
-from tests.test_metrics import TestMetricsModule
-test = TestMetricsModule()
