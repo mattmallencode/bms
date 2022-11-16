@@ -17,32 +17,35 @@ class TestMetricsModule(TestCase):
 
     def test_time_till_full(self):
         # instantiate variables
-        self.battery_percentage = 60
-        self.functional_capacity = 2600
+        config.chargepercent = 60
+        config.CAPACITY = 2600
+        config.lifespan = 1
         
         #calculate ttf and check if it is equal to the expected result
-        ttf = time_till_full(self.charger, self.battery_percentage, self.functional_capacity)
+        ttf = time_till_full(self.charger)
         self.assertAlmostEqual(ttf, 0.52)
 
     def test_time_till_empty(self):
         # instantiate variables
-        self.battery_percentage = 60
-        self.functional_capacity = 2600
+        config.chargepercent = 60
+        config.CAPACITY = 2600
+        config.lifespan = 1
         
         #calculate tte and check if it is equal to the expected result
-        tte = time_till_empty(self.phone, self.battery_percentage, self.functional_capacity)
+        tte = time_till_empty(self.phone)
         self.assertEqual(tte, 0.312)
 
     def test_state_of_charge(self):
         # instantiate variables for if the phone is charging test case
         self.phone.is_charging = True
-        self.battery_percentage = 60
-        self.functional_capacity = 2600
-        self.time_since_last_soc_calulation = time()
+        config.chargepercent = 60
+        config.CAPACITY = 2600
+        config.lifespan = 1
+        config.time_since_last_soc_calculation = time()
         # sleep for 30 seconds to obtain a noticeable change in the SoC value
         sleep(5)
         #calculate soc
-        soc = state_of_charge(self.charger, self.phone, self.battery_percentage, self.time_since_last_soc_calulation, self.functional_capacity)
+        soc = state_of_charge(self.charger, self.phone)
         soc = round(soc, 2)
         # check if soc value equal to expected result
         self.assertAlmostEqual(soc, 63.85, 1)
@@ -50,13 +53,14 @@ class TestMetricsModule(TestCase):
 
         # instantiate variables for if the phone is not charging test case
         self.phone.is_charging = False
-        self.battery_percentage = 60
-        self.functional_capacity = 2600
+        config.chargepercent = 60
+        config.CAPACITY = 2600
+        config.lifespan = 1
         self.time_since_last_soc_calulation = time()
         # sleep for 30 seconds to obtain a noticeable change in the SoC value
         sleep(5)
         #calculate soc
-        soc = state_of_charge(self.charger, self.phone, self.battery_percentage, self.time_since_last_soc_calulation ,self.functional_capacity)
+        soc = state_of_charge(self.charger, self.phone)
         soc = round(soc, 2)
 
         # check if soc value equal to expected result
