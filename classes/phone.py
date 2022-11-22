@@ -118,7 +118,7 @@ class Phone:
                 self._off_screen()
             else:
                 self._powered_on = True
-                self._power_draw = 5.0
+                self._power_draw = config.POWERDRAWSCREENON
                 self._on_screen()
             return self.powered_on
 
@@ -141,8 +141,6 @@ class Phone:
             else:
                 self._display_on = True
             self._screen_state()
-            #self._canvas.create_text(self._canvas_size["x"]/2, self._canvas_size["y"]/2, fill="black", text="Phone is on\nthis is where inside\ndetails will go!")
-            #self._lock_screen()
             return self.display_on
 
         # Handles button clicks on the "screen" 
