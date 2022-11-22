@@ -20,12 +20,8 @@ class Charger:
         """
         self._battery = battery
         self._powerbrick = powerbrick
-        
-
         self._charge_setting = None
-        # c rate should be assigned from the config.py
-        self._c_rate = None
-
+        self._c_rate = config.CHARGE_C
         self._current_time = time()
 
 
@@ -40,16 +36,9 @@ class Charger:
 
     def report_current(self) -> float:
         return self._battery._current
-
-    def _get_c_rate(self) -> float:
-        return self._c_rate
-    
-    def _set_c_rate(self, rate) -> None:
-        self._c_rate = rate
         
         
     charge_setting = property(_get_charge_setting, _set_charge_setting)
-    c_rate = property(_get_c_rate, _set_c_rate)
 
     def trickle_charge(self):
         ''' This is the function that calculates the voltage and current of the battery 
