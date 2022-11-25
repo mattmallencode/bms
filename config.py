@@ -1,4 +1,5 @@
 # https://www.aliexpress.com/item/1005002877506257.html?spm=a2g0o.productlist.0.0.9b4551fdEulDv5&algo_pvid=8c6cf013-c144-455b-ad81-7fe01dc505a4&algo_exp_id=8c6cf013-c144-455b-ad81-7fe01dc505a4-0&pdp_ext_f=%7B%22sku_id%22%3A%2212000022586204386%22%7D&pdp_npi=2%40dis%21EUR%2111.93%219.54%21%21%21%21%21%40210318b816684264364232188e374e%2112000022586204386%21sea&curPageLogUid=fgLi3LoKrm6H
+from time import time
 
 # At this voltage the battery is dead, trending towards this voltage indicates a lower capacity.
 VOLTAGE_MIN: float = 3.0
@@ -27,5 +28,10 @@ POWER_BRICK_CURRENT: int = 2
 # constant for voltage from power brick.
 POWER_BRICK_VOLTAGE: int = 5
 # variable to hold time since the last state of charge was calculated
-from time import time
 time_since_last_soc_calculation = time()
+
+POWERDRAWSCREENOFF = 0.1
+
+POWERDRAWSCREENON = 0.1
+
+POWERDRAWMAX = 0.1
