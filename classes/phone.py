@@ -118,7 +118,6 @@ class Phone:
                 self._off_screen()
             else:
                 self._powered_on = True
-                self._power_draw = 5.0
                 self._on_screen()
             return self.powered_on
 

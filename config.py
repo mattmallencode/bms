@@ -17,7 +17,7 @@ CAPACITY: float = 2600
 # Estimate of how many full charge and discharge cycles the battery can handle before it begins to lose functional capacity.
 lifespan: float = 1
 # variable to hold charge percent
-chargepercent: int = 34
+chargepercent: int = 0
 # variable to hold Time Till Full
 ttf: float = 4.6
 # variable to hold Time Till Empty

@@ -16,10 +16,6 @@ class Battery:
         self._current = current
         self._voltage = voltage
 
-        # Time 
-        self._time = None
-        self._time_last_changed = None
-
     def _get_current(self) -> float:
         """Returns the current of the battery."""
         return self._current
@@ -35,18 +31,6 @@ class Battery:
     def _set_voltage(self, voltage) -> None:
         """Updates the voltage of the battery."""
         self._voltage = voltage
-    
-    def _get_time(self) -> float:
-        return self._time
-
-    def _set_time(self, time) -> float:
-        self._time = time
-
-    def _get_time_last_changed(self) -> float:
-        return self._time_last_changed
-    
-    def _set_time_last_changed(self, time_last_changed) -> float:
-        self._time_last_changed = time_last_changed
 
     
     # Assign all of the getters of setters to class properties.
@@ -54,5 +38,3 @@ class Battery:
     # E.g. my_battery.is_charging = False calls _set_is_charging(False) under the hood.
     current = property(_get_current, _set_current)
     voltage = property(_get_voltage, _set_voltage)
-    time = property(_get_time, _set_time)
-    time_last_changed = property(_get_time_last_changed, _set_time_last_changed)

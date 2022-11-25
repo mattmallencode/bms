@@ -37,19 +37,28 @@ def state_of_charge(charger, phone) -> float:
 
     if phone.is_charging:
         i = charger.report_current()
-    else:
+        # gets current time t
+        time_now = time()
+        #time_step is the time interval between the last SoC calculation at t-1 and the current SoC calculation at time t
+        time_step = time_now - config.time_since_last_soc_calculation
+        # updates the time since the last soc calculation to the current time
+        config.time_since_last_soc_calculation = time_now
+        # calculates the state of charge
+        functional_capacity = config.CAPACITY * config.lifespan
+        soc = config.chargepercent + ((i/(functional_capacity / 1000)) * time_step)
+        # sets the battery percentage equal to the newly calculated battery percentage
+        config.chargepercent = soc
+    if phone._powered_on:
         i = -phone.power_draw
-
-    # gets current time t
-    time_now = time()
-    #time_step is the time interval between the last SoC calculation at t-1 and the current SoC calculation at time t
-    time_step = time_now - config.time_since_last_soc_calculation
-    # updates the time since the last soc calculation to the current time
-    config.time_since_last_soc_calculation = time_now
-    # calculates the state of charge
-    functional_capacity = config.CAPACITY * config.lifespan
-    soc = config.chargepercent + ((i/(functional_capacity / 1000)) * time_step)
-    # sets the battery percentage equal to the newly calculated battery percentage
-    config.chargepercent = soc
-    
+        # gets current time t
+        time_now = time()
+        #time_step is the time interval between the last SoC calculation at t-1 and the current SoC calculation at time t
+        time_step = time_now - config.time_since_last_soc_calculation
+        # updates the time since the last soc calculation to the current time
+        config.time_since_last_soc_calculation = time_now
+        # calculates the state of charge
+        functional_capacity = config.CAPACITY * config.lifespan
+        soc = config.chargepercent + ((i/(functional_capacity / 1000)) * time_step)
+        # sets the battery percentage equal to the newly calculated battery percentage
+        config.chargepercent = soc   
     return soc

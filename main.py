@@ -9,11 +9,11 @@ import config
 from time import time
 
 power_brick = PowerBrick(config.POWER_BRICK_CURRENT, config.POWER_BRICK_VOLTAGE)
-battery = Battery(1, 3.6)
+battery = Battery(1, 4)
 charger = Charger(battery, power_brick)
 last_time_discharged = None
 
-config.chargepercent = ((3.6 - config.VOLTAGE_MIN) * 100)/ (config.VOLTAGE_MAX - config.VOLTAGE_MIN)
+config.chargepercent = ((4 - config.VOLTAGE_MIN) * 100)/ (config.VOLTAGE_MAX - config.VOLTAGE_MIN)
 config.ttf = time_till_full(charger)
 phone = Phone(True, True, True, True, 0.01, charger)
 config.tte = time_till_empty(phone)
@@ -22,6 +22,7 @@ while True:
         phone._root.update_idletasks()
         phone._root.update()
         if phone.is_charging == True:
+            charger.charge_battery()
             decide_charge_mode(charger)
             charger.charge_battery()
             state_of_charge(charger, phone)
@@ -37,3 +38,4 @@ while True:
                 time_till_full(charger)
             if phone.locked and phone.is_charging == False:
                 time_till_empty(phone)
+        print(charger.charge_setting, charger.report_voltage(), charger.report_current())

@@ -20,13 +20,11 @@ class Charger:
         """
         self._battery = battery
         self._powerbrick = powerbrick
-        
+        self._time_of_last_charge = time()
 
         self._charge_setting = None
         # c rate should be assigned from the config.py
         self._c_rate = None
-
-        self._current_time = time()
 
 
     def _get_charge_setting(self) -> str:
@@ -55,7 +53,8 @@ class Charger:
         ''' This is the function that calculates the voltage and current of the battery 
             For the duration of time the battery spent in trickle charge.'''
         # Time spent in trickle charge = our batteries current time - the last time the function was called.
-        time_in_trickle_charge = self._battery.time - self._battery.time_last_changed
+        time_in_trickle_charge = time() - self._time_of_last_charge
+        self._time_of_last_charge  = time()
         # Apply the formula for calculating voltage and current.
         # the maximum voltage possible.
         voltage_max = self._powerbrick.voltage
@@ -66,12 +65,12 @@ class Charger:
         # The current is 1/100 of the normal current in trickle charge
         self._battery.current = self._powerbrick.current / 100 
         # set the last time the function was called to the curretn time for when the charge_battery() function is called next
-        self._battery.time_last_changed = self._battery.time
 
     def constant_current(self):
         ''' This is the function that calculates the voltage and current of the battery 
             For the duration of time the battery spent in the constant current charge method.''' 
-        time_in_constant_current = self._battery.time - self._battery.time_last_changed
+        time_in_constant_current = time() - self._time_of_last_charge
+        self._time_of_last_charge  = time()
         #print(time_in_constant_current)
         # Apply the voltage formula for constant current
         voltage_in = (1.0 / config.CHARGE_C) * time_in_constant_current ** 2
@@ -79,34 +78,24 @@ class Charger:
         self._battery.voltage = voltage_in + self._battery.voltage
         # Current
         self._battery.current = config.CHARGE_C
-        self._battery.time_last_changed = self._battery.time
     
     def constant_voltage(self):
         ''' This is the function that calculates the voltage and current of the battery 
             For the duration of time the battery spent in the constant voltage charge method.'''
-        time_in_constant_voltage = self._battery.time - self._battery.time_last_changed
+        time_in_constant_voltage = time() - self._time_of_last_charge
+        self._time_of_last_charge  = time()
         # Apply the voltage formula for constant voltage
         voltage_in = self._powerbrick.voltage * time_in_constant_voltage
         # Accumulating the voltage over time in the battery
         self._battery.voltage = voltage_in + self._battery.voltage
         # Apply the current formula for constant voltage
         self._battery.current = config.CHARGE_C * (math.cos(time_in_constant_voltage / config.CHARGE_C) + config.CHARGE_C)
-        self._battery.time_last_changed = self._battery.time
         
 
     def charge_battery(self) -> None:
         ''' Charging the battery will affect the variables within the battery. 
         In this case it is current and voltage. The varibales are altered differently based on the charge state.
         '''
-        # Time for the first time.
-        if self._battery._time == None:
-            self._current_time = time()
-            self._battery.time = self._current_time
-            self._battery.time_last_changed = self._current_time
-        else:
-            # A previous time exists
-            self._current_time = time()
-            self._battery.time = self._current_time
         # If the charge setting is "trickle" alter the variables based on the trickle charge.
         if self._charge_setting == "trickle":
             self.trickle_charge()
