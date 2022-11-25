@@ -3,8 +3,7 @@ from classes.charger import Charger
 from classes.phone import Phone
 from classes.powerbrick import PowerBrick
 from ms_modules.charging import decide_charge_mode, discharge
-from ms_modules.metrics import state_of_charge, time_till_empty, time_till_full
-from ms_modules.health import adjust_lifespan
+from ms_modules.metrics import state_of_charge, time_till_empty, time_till_full, adjust_lifespan
 import config
 from time import time
 
