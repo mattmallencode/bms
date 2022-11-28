@@ -10,7 +10,7 @@ import math
 
 
 class Charger:
-    def __init__(self, battery: Type[Battery], powerbrick: Type[PowerBrick]):
+    def __init__(self, battery: Type[Battery], powerbrick: Type[PowerBrick]) -> None:
         """
         Charger object for a battery that charges the battery in a safe manner.
 
@@ -42,7 +42,7 @@ class Charger:
         return self._battery._current
     charge_setting = property(_get_charge_setting, _set_charge_setting)
 
-    def trickle_charge(self):
+    def trickle_charge(self) -> None:
         """Charges the battery in trickle charge mode."""
         # Time spent in trickle charge = our batteries current time - the last time the function was called.
         time_in_trickle_charge = time() - self._time_of_last_charge
@@ -58,7 +58,7 @@ class Charger:
         self._battery.current = self._powerbrick.current / 100
         # set the last time the function was called to the curretn time for when the charge_battery() function is called next
 
-    def constant_current(self):
+    def constant_current(self) -> None:
         """Charges the battery in constant current mode."""
         time_in_constant_current = time() - self._time_of_last_charge
         self._time_of_last_charge = time()
@@ -76,7 +76,7 @@ class Charger:
         # Current
         self._battery.current = (config.CHARGE_C*time_in_constant_current)
 
-    def constant_voltage(self):
+    def constant_voltage(self) -> None:
         """Charges the battery in constant voltage mode."""
         time_in_constant_voltage = time() - self._time_of_last_charge
         self._time_of_last_charge = time()

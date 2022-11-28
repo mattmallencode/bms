@@ -83,7 +83,7 @@ class Phone:
         self._canvas.pack()
 
 
-    def _screen_state(self):
+    def _screen_state(self) -> None:
         """Method to manage the screen state based on interaction with the UI."""
         if self._powered_on and not self.display_on:
             self._on_screen()
@@ -98,7 +98,7 @@ class Phone:
         else:
             self._off_screen()
 
-    def _press(self, event):
+    def _press(self, event) -> bool:
         """Method to handle 'press' events i.e. clicks on the canvas."""
         #print("powered_on", self._powered_on, "|display_on", self.display_on, "|locked", self._locked, "|is_charging", self._is_charging, "|power_draw", self._power_draw, "|settings", self._settings)
 
@@ -167,17 +167,17 @@ class Phone:
 
         #print("powered_on", self._powered_on, "|display_on", self.display_on, "|locked", self._locked, "|is_charging", self._is_charging, "|power_draw", self._power_draw)
 
-    def _off_screen(self):
+    def _off_screen(self) -> None:
         """Method to change the screen's state to 'OFF'."""
         self._canvas.create_rectangle(self._screen_corners["X1"], self._screen_corners["Y1"], self._screen_corners["X2"], self._screen_corners["Y2"], fill="grey10", outline="black")
         self._canvas.create_text(self._canvas_size["x"]/2, self._canvas_size["y"]/2, fill="black", text="OFF", font="Helvetica 40 bold")
 
-    def _on_screen(self):
+    def _on_screen(self) -> None:
         """Method to change the screen's state to 'ON'."""
         self._canvas.create_rectangle(self._screen_corners["X1"], self._screen_corners["Y1"], self._screen_corners["X2"], self._screen_corners["Y2"], fill="grey16", outline="black")
         self._canvas.create_text(self._canvas_size["x"]/2, self._canvas_size["y"]/2, fill="black", text="ON", font="Helvetica 40 bold")
     
-    def _lock_screen(self):
+    def _lock_screen(self) -> None:
         """Method to change the screen's state to 'LOCKED'."""
         self._canvas.create_rectangle(self._screen_corners["X1"], self._screen_corners["Y1"], self._screen_corners["X2"], self._screen_corners["Y2"], fill="white", outline="black")
         self._notification_pannel = self._canvas.create_rectangle(self._notification_pannel_corners["X1"], self._notification_pannel_corners["Y1"], self._notification_pannel_corners["X2"], self._notification_pannel_corners["Y2"], fill="red", outline="black")
@@ -189,7 +189,7 @@ class Phone:
         self._canvas.create_text(self._unlock_button["X1"]+(self._unlock_button_size["x"]/2), self._unlock_button["Y1"]+(self._unlock_button_size["y"]/2), fill="pale green", text="unlock", font="Helvetica 12")
 
 
-    def _home_screen(self):
+    def _home_screen(self) -> None:
         """Method to change the screen's state to the home screen."""
         self._canvas.create_rectangle(self._screen_corners["X1"], self._screen_corners["Y1"], self._screen_corners["X2"], self._screen_corners["Y2"], fill="steelblue1", outline="black")
 
@@ -201,7 +201,7 @@ class Phone:
         self._canvas.create_rectangle(self._settings_button["X1"], self._settings_button["Y1"], self._settings_button["X2"], self._settings_button["Y2"], fill="DarkOrange1", outline="black")
         self._canvas.create_text(self._settings_button["X1"]+(self._settings_button_size["x"]/2), self._settings_button["Y1"]+(self._settings_button_size["y"]/2), fill="thistle1", text="settings", font="Helvetica 12")
 
-    def _settings_screen(self):
+    def _settings_screen(self) -> None: 
         """Method to change the screen's state to the setting's screen."""
         self._canvas.create_rectangle(self._screen_corners["X1"], self._screen_corners["Y1"], self._screen_corners["X2"], self._screen_corners["Y2"], fill="green yellow", outline="black")
         self._canvas.create_text(self._canvas_size["x"]/2, self._canvas_size["y"]/2, fill="black", text=f"Battery at {round(config.chargepercent, 2)}%\n\nBattery Health: {round(config.lifespan, 2)}", font="Helvetica 16 bold")
@@ -210,7 +210,7 @@ class Phone:
         self._canvas.create_rectangle(self._settings_return_button["X1"], self._settings_return_button["Y1"], self._settings_return_button["X2"], self._settings_return_button["Y2"], fill="thistle1", outline="black")
         self._canvas.create_text(self._settings_return_button["X1"]+(self._settings_return_button_size["x"]/2), self._settings_return_button["Y1"]+(self._settings_return_button_size["y"]/2), fill="DarkOrange1", text="return", font="Helvetica 12")
 
-    def _charging_set(self):
+    def _charging_set(self) -> None:
         """Method to update the lock screen text and the power brick connector's colour based on the charging status."""
         if self._is_charging:
             self._timetill.set(f"battery full in\n {self._hours_minutes_seconds(config.ttf)} hours")

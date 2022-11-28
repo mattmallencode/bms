@@ -37,13 +37,11 @@ def discharge(battery: Type[Battery], phone: Type[Phone], last_time_discharged: 
     '''
     Function to draw charge from the battery based on the power draw of the phone (GUI).
 
-    Satisfies requirement 6: Discharge
-
     battery -- the battery the BMS is managing.
     phone -- the phone the BMS is managing the battery of.
     last_time_discharged -- the last time this function was called.
 
-    Returns the new time stanp to be passed as "last_time_discharged" the next time discharge is called.
+    Returns: the new time stanp to be passed as "last_time_discharged" the next time discharge is called.
     '''
     # Discharge the battery by the power draw times the time_passed.
     new_last_time = time()
