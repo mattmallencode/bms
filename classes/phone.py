@@ -85,6 +85,7 @@ class Phone:
 
 
     def _screen_state(self):
+        """Method to manage the screen state based on interaction with the UI."""
         if self._powered_on and not self.display_on:
             self._on_screen()
         elif self._display_on:
@@ -99,6 +100,7 @@ class Phone:
             self._off_screen()
 
     def _press(self, event):
+        """Method to handle 'press' events i.e. clicks on the canvas."""
         #print("powered_on", self._powered_on, "|display_on", self.display_on, "|locked", self._locked, "|is_charging", self._is_charging, "|power_draw", self._power_draw, "|settings", self._settings)
 
         """ Handles clicks on the canvas """
@@ -167,15 +169,17 @@ class Phone:
         #print("powered_on", self._powered_on, "|display_on", self.display_on, "|locked", self._locked, "|is_charging", self._is_charging, "|power_draw", self._power_draw)
 
     def _off_screen(self):
+        """Method to change the screen's state to 'OFF'."""
         self._canvas.create_rectangle(self._screen_corners["X1"], self._screen_corners["Y1"], self._screen_corners["X2"], self._screen_corners["Y2"], fill="grey10", outline="black")
         self._canvas.create_text(self._canvas_size["x"]/2, self._canvas_size["y"]/2, fill="black", text="OFF", font="Helvetica 40 bold")
 
     def _on_screen(self):
+        """Method to change the screen's state to 'ON'."""
         self._canvas.create_rectangle(self._screen_corners["X1"], self._screen_corners["Y1"], self._screen_corners["X2"], self._screen_corners["Y2"], fill="grey16", outline="black")
         self._canvas.create_text(self._canvas_size["x"]/2, self._canvas_size["y"]/2, fill="black", text="ON", font="Helvetica 40 bold")
     
     def _lock_screen(self):
-        """Handles lock screen"""
+        """Method to change the screen's state to 'LOCKED'."""
         self._canvas.create_rectangle(self._screen_corners["X1"], self._screen_corners["Y1"], self._screen_corners["X2"], self._screen_corners["Y2"], fill="white", outline="black")
         self._notification_pannel = self._canvas.create_rectangle(self._notification_pannel_corners["X1"], self._notification_pannel_corners["Y1"], self._notification_pannel_corners["X2"], self._notification_pannel_corners["Y2"], fill="red", outline="black")
         # display ttf plugged in or tte when not
@@ -187,7 +191,7 @@ class Phone:
 
 
     def _home_screen(self):
-        """Handles home screen"""
+        """Method to change the screen's state to the home screen."""
         self._canvas.create_rectangle(self._screen_corners["X1"], self._screen_corners["Y1"], self._screen_corners["X2"], self._screen_corners["Y2"], fill="steelblue1", outline="black")
 
         # lock button
@@ -199,7 +203,7 @@ class Phone:
         self._canvas.create_text(self._settings_button["X1"]+(self._settings_button_size["x"]/2), self._settings_button["Y1"]+(self._settings_button_size["y"]/2), fill="thistle1", text="settings", font="Helvetica 12")
 
     def _settings_screen(self):
-        """Handles settings screen"""
+        """Method to change the screen's state to the setting's screen."""
         self._canvas.create_rectangle(self._screen_corners["X1"], self._screen_corners["Y1"], self._screen_corners["X2"], self._screen_corners["Y2"], fill="green yellow", outline="black")
         self._canvas.create_text(self._canvas_size["x"]/2, self._canvas_size["y"]/2, fill="black", text=f"Battery at {round(config.chargepercent, 2)}%\n\nBattery Health: {round(config.lifespan, 2)}", font="Helvetica 16 bold")
 
@@ -208,6 +212,7 @@ class Phone:
         self._canvas.create_text(self._settings_return_button["X1"]+(self._settings_return_button_size["x"]/2), self._settings_return_button["Y1"]+(self._settings_return_button_size["y"]/2), fill="DarkOrange1", text="return", font="Helvetica 12")
 
     def _charging_set(self):
+        """Method to update the lock screen text and the power brick connector's colour based on the charging status."""
         if self._is_charging:
             self._timetill.set(f"battery full in\n {self._hours_minutes_seconds(config.ttf)} hours")
             self._connector = self._canvas.create_rectangle(self._connector_corners["X1"], self._connector_corners["Y1"], self._connector_corners["X2"], self._connector_corners["Y2"], fill="green3", outline="black")
@@ -217,6 +222,7 @@ class Phone:
         self._screen_state()
 
     def _hours_minutes_seconds(self, hours:float) -> str:
+        """Method to convert the TTE/TTF text into more readable hours and minutes text."""
         min = hours - int(hours)
         min = int(min * 60)
         hoursMin = f"{int(hours)} hours and {min} minutes"
@@ -280,10 +286,3 @@ class Phone:
     is_charging = property(_get_is_charging, _set_is_charging)
     power_draw = property(_get_power_draw, _set_power_draw)
     is_dead = property(_get_is_dead, _get_is_dead)
-
-if __name__ == "__main__":
-    P = Phone(False, False, True, False, 5.0)
-    while True:
-        P._root.update_idletasks()
-        P._root.update()
-        # https://stackoverflow.com/questions/29158220/tkinter-understanding-mainloop
