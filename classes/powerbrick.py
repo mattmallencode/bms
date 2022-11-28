@@ -4,7 +4,6 @@ class PowerBrick:
         """
         Initializes an instance of the PowerBrick class based on the arguments you pass to this constructor.
 
-        Keyword arguments:
         CURRENT -- constant, the current of the PowerBrick.
         VOLTAGE -- constant, the voltage of the PowerBrick.
         """

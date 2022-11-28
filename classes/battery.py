@@ -3,8 +3,7 @@ class Battery:
     def __init__(self, current: float, voltage: float) -> None:
         """
         Initializes an instance of the Battery class based on the arguments you pass to this constructor.
-
-        Keyword arguments:
+        
         current -- the current of the battery.
         voltage -- the voltage of the battery.
         """

@@ -16,11 +16,7 @@ def decide_charge_mode(charger: Type[Charger]) -> None:
     '''
     Function to set the charging mode of the Charger based on various parameters e.g. voltage_max, voltage_min.
 
-    Satisfies requirement 2: Determine Charge Setting
-
     charger -- the charger we want to update the charge mode of.
-
-    alters the charge mode in the charger
     '''
     setting: str
     voltage = charger.report_voltage()

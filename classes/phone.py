@@ -10,7 +10,6 @@ class Phone:
         """
         Initializes an instance of the Phone class based on the arguments you pass to this constructor.
 
-        Keyword arguments:
         powered_on -- bool indicating whether the phone is currently powered on.
         display_on -- bool indicating whether the phone's screen / display is turned on.
         locked -- bool indicating whether the phone is currently locked.
