@@ -64,25 +64,34 @@ class Charger:
         time_in_constant_current = time() - self._time_of_last_charge
         self._time_of_last_charge  = time()
         #print(time_in_constant_current)
-        # Apply the voltage formula for constant current
+        '''# Apply the voltage formula for constant current
         voltage_in = (1.0 / config.CHARGE_C) * time_in_constant_current ** 2
         # Accumulating the voltage over time in the battery
-        self._battery.voltage = voltage_in + self._battery.voltage
+        self._battery.voltage = voltage_in + self._battery.voltage'''
+
+        #print(time_in_constant_current)
+        capacityPercentage = (config.CAPACITY/100)*(config.THRESHHOLDPRECENTAGE)
+        m = (capacityPercentage/(config.CHARGE_C*config.CAPACITY))
+        #print(m)
+        self._battery.voltage += (m*time_in_constant_current)
+
         # Current
-        self._battery.current = config.CHARGE_C
+        self._battery.current = (config.CHARGE_C*time_in_constant_current)
     
     def constant_voltage(self):
         ''' This is the function that calculates the voltage and current of the battery 
             For the duration of time the battery spent in the constant voltage charge method.'''
         time_in_constant_voltage = time() - self._time_of_last_charge
         self._time_of_last_charge  = time()
-        # Apply the voltage formula for constant voltage
-        voltage_in = self._powerbrick.voltage * time_in_constant_voltage
-        # Accumulating the voltage over time in the battery
-        self._battery.voltage = voltage_in + self._battery.voltage
-        # Apply the current formula for constant voltage
-        self._battery.current = config.CHARGE_C * (math.cos(time_in_constant_voltage / config.CHARGE_C) + config.CHARGE_C)
         
+        #print(time_in_constant_voltage)
+        # Apply the current formula for constant voltage
+
+        capacityPercentage = (config.CAPACITY/100)*(100-config.THRESHHOLDPRECENTAGE)
+        m = (((capacityPercentage)/(config.CHARGE_C*1000))/4000)
+        #print(m)
+
+        self._battery.current -= (m*time_in_constant_voltage)
 
     def charge_battery(self) -> None:
         ''' Charging the battery will affect the variables within the battery. 

@@ -10,11 +10,11 @@ CHARGE_C: float = 1
 # Max rate of discharge.
 DISCHARGE_C: float = 1
 # The threshold of the current when battery is fully charged
-THRESHOLD: float = 0.05
+THRESHOLD: float = 0
 # The battery's status, either dead or alive. 
 BATTERY_ALIVE: bool = True
 # The original capacity of the battery.
-CAPACITY: float = 2600
+CAPACITY: float = 2400
 # Estimate of how many full charge and discharge cycles the battery can handle before it begins to lose functional capacity.
 lifespan: float = 1
 # variable to hold charge percent
@@ -35,3 +35,6 @@ POWERDRAWSCREENOFF = 0.1
 POWERDRAWSCREENON = 0.1
 
 POWERDRAWMAX = 0.1
+
+
+THRESHHOLDPRECENTAGE = 5

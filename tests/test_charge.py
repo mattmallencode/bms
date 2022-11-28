@@ -18,7 +18,6 @@ import config
 
 
 class TestChargeModeClass(TestCase):
-
     def test_DecideChargeMode(self):
         # Create a dummy power brick.
         power_brick = PowerBrick(15, 15)
