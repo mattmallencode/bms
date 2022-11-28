@@ -1,6 +1,3 @@
-import math
-
-
 # Class representing the state of a battery of a phone.
 class Battery:
     def __init__(self, current: float, voltage: float) -> None:
