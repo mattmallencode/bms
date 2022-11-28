@@ -1,8 +1,4 @@
 import tkinter
-from time import time
-from typing import Type
-from ms_modules.metrics import time_till_full, time_till_empty
-from classes.charger import Charger
 import config
 
 """ use properties dont change self.X """
@@ -10,7 +6,7 @@ import config
 
 # Class representing the state of a phone.
 class Phone:
-    def __init__(self, powered_on: bool, display_on: bool, locked: bool, is_charging: bool, power_draw: float, charger) -> None:
+    def __init__(self, powered_on: bool, display_on: bool, locked: bool, is_charging: bool, power_draw: float) -> None:
         """
         Initializes an instance of the Phone class based on the arguments you pass to this constructor.
 
@@ -18,9 +14,8 @@ class Phone:
         powered_on -- bool indicating whether the phone is currently powered on.
         display_on -- bool indicating whether the phone's screen / display is turned on.
         locked -- bool indicating whether the phone is currently locked.
-        power_draw -- how much voltage should be decreased per second.
         is_charging -- bool indicating whether the charger is plugged in 
-
+        power_draw -- how much voltage should be decreased per second.
         """
         # Initialize instance variables based on arguments passed to the constructor.
         self._powered_on = powered_on
@@ -29,7 +24,6 @@ class Phone:
         self._is_charging = is_charging
         self._power_draw = power_draw
         self._is_dead = False
-        self._charger = charger
         self._settings = False
 
         self._root = tkinter.Tk()

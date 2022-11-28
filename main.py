@@ -14,7 +14,7 @@ last_time_discharged = None
 
 config.chargepercent = ((3.0 - config.VOLTAGE_MIN) * 100)/ (config.VOLTAGE_MAX - config.VOLTAGE_MIN)
 config.ttf = time_till_full(charger)
-phone = Phone(True, True, True, True, 0.01, charger)
+phone = Phone(True, True, True, True, 0.01)
 config.tte = time_till_empty(phone)
 
 while True: 
