@@ -8,7 +8,7 @@ functional_capacity = config.CAPACITY * config.lifespan
 
 def time_till_full(charger) -> float:
     """
-    time_till_full returns the time (in hours) until the battery is fully charged from its current battery discharged
+    Returns the time (in hours) until the battery is fully charged from its current battery discharged
     """
     functional_capacity = config.CAPACITY * config.lifespan
     ttf_from_empty = (functional_capacity/1000) / charger.report_current()
@@ -19,7 +19,7 @@ def time_till_full(charger) -> float:
 
 def time_till_empty(phone) -> float:
     """
-    time_till_empty returns the time (in hours) until the battery is fully discharged from its current battery percentage
+    Returns the time (in hours) until the battery is fully discharged from its current battery percentage
     """
     functional_capacity = config.CAPACITY * config.lifespan
     tte_from_full = (functional_capacity/1000) / phone.power_draw
@@ -30,7 +30,7 @@ def time_till_empty(phone) -> float:
 
 def state_of_charge(charger, phone) -> float:
     """
-    state_of_charge returns the current battery percentage 
+    Returns the current battery percentage 
 
     Reference for SoC calculation: https://www.batterydesign.net/soc-estimation-by-coulomb-counting/
     """
@@ -66,13 +66,13 @@ def state_of_charge(charger, phone) -> float:
 def adjust_lifespan(dif_in_soc: float) -> float:
     ''' 
     Adjusts the lifespan of the battery according to how many full charge cycles it has gone through.
+
     A lithium ion battery retains 80% of its original capacity after 500 charge cycles.
     So, this means that per charge cycle the capacity should reduce by 0.04 percent per charge cycle or 0.0004% for every 1% of discharge.
     The above is taken from Apple (will reference properly later).
 
-    Keyword arguments:
     dif_in_soc -- the difference in SoC before discharge was called, and after discharge was called.
 
-    Returns the adjusted lifespan of the battery.
+    Returns: the adjusted lifespan of the battery.
     '''
     config.lifespan -= ((0.0004 * dif_in_soc) / 100)
