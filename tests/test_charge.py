@@ -19,6 +19,7 @@ import config
 
 class TestChargeModeClass(TestCase):
     def test_DecideChargeMode(self):
+        """Method to test the decide_charge_mode() function."""
         # Create a dummy power brick.
         power_brick = PowerBrick(15, 15)
         # Create a dummy battery.
@@ -54,6 +55,7 @@ class TestChargeModeClass(TestCase):
 
 
     def test_discharge(self):
+        """Method to test the discharge() function."""
         # Create a dummy power brick.
         power_brick = PowerBrick(15, 15)
         # Create a dummy battery.

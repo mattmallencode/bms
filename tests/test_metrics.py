@@ -16,6 +16,7 @@ class TestMetricsModule(TestCase):
     phone = Phone(False, False, True, False, 5, charger)
 
     def test_time_till_full(self):
+        "Method to test the time_till_full() function."
         # instantiate variables
         config.chargepercent = 60
         config.CAPACITY = 2600
@@ -26,6 +27,7 @@ class TestMetricsModule(TestCase):
         self.assertAlmostEqual(ttf, 0.52)
 
     def test_time_till_empty(self):
+        "Method to test the time_till_empty() function."
         # instantiate variables
         config.chargepercent = 60
         config.CAPACITY = 2600
@@ -36,6 +38,7 @@ class TestMetricsModule(TestCase):
         self.assertEqual(tte, 0.312)
 
     def test_state_of_charge(self):
+        "Method to test the state_of_charge() function."
         # instantiate variables for if the phone is charging test case
         self.phone.is_charging = True
         config.chargepercent = 60
