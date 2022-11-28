@@ -27,7 +27,7 @@ while True:
             if last_time_discharged == None:
                 last_time_discharged = time()
             soc_before = state_of_charge(charger, phone)
-            #discharge(battery, phone, last_time_discharged)
+            discharge(battery, phone, last_time_discharged)
             soc_after = state_of_charge(charger, phone)
             adjust_lifespan(soc_after -soc_before)
             last_time_discharged = time()
@@ -35,5 +35,5 @@ while True:
                 time_till_full(charger)
             if phone.locked and phone.is_charging == False:
                 time_till_empty(phone)
-        print(charger.charge_setting, charger.report_voltage(), charger.report_current(), config.chargepercent, charger.charge)
+        print(charger.charge_setting, charger.report_voltage(), charger.report_current(), config.chargepercent, config.tte)
         sleep(0.5)
