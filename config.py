@@ -20,7 +20,7 @@ lifespan: float = 1
 # variable to hold charge percent
 chargepercent: int = 0
 # variable to hold Time Till Full
-ttf: float = 4.6
+ttf: float = 0.5
 # variable to hold Time Till Empty
 tte: float = 3.4
 # constant for current from power brick.
@@ -29,7 +29,8 @@ POWER_BRICK_CURRENT: int = 2
 POWER_BRICK_VOLTAGE: int = 5
 # variable to hold time since the last state of charge was calculated
 time_since_last_soc_calculation = time()
-
+time_of_last_ttf: time = time()
+last_soc_ttf: float = chargepercent - 0.01
 POWERDRAWSCREENOFF = 0.1
 
 POWERDRAWSCREENON = 0.1

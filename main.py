@@ -13,13 +13,17 @@ charger = Charger(battery, power_brick)
 last_time_discharged = None
 
 config.chargepercent = ((3.0 - config.VOLTAGE_MIN) * 100)/ (config.VOLTAGE_MAX - config.VOLTAGE_MIN)
-config.ttf = time_till_full(charger)
+config.ttf = 0.12
 phone = Phone(True, True, True, True, 0.01)
-config.tte = time_till_empty(phone)
+config.tte = 0.1
 
 while True: 
         phone._root.update_idletasks()
         phone._root.update()
+        if phone._is_charging:
+            phone._timetill.set(f"battery full in\n {phone._hours_minutes_seconds(config.ttf)} hours")
+        else:
+            phone._timetill.set(f"battery dead in\n {phone._hours_minutes_seconds(config.tte)} hours")
         if phone.is_charging == True:
             charger.charge_battery()
             decide_charge_mode(charger)
@@ -35,5 +39,5 @@ while True:
                 time_till_full(charger)
             if phone.locked and phone.is_charging == False:
                 time_till_empty(phone)
-        print(charger.charge_setting, charger.report_voltage(), charger.report_current(), config.chargepercent, config.tte)
+        print(charger.charge_setting, config.chargepercent)
         sleep(0.5)

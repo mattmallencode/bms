@@ -10,10 +10,12 @@ def time_till_full(charger) -> float:
     """
     Returns the time (in hours) until the battery is fully charged from its current battery discharged
     """
-    functional_capacity = config.CAPACITY * config.lifespan
-    ttf_from_empty = (functional_capacity/1000) / charger.report_current()
+    curr_time = time()
+    ttf_from_empty = 100 / ((config.chargepercent - config.last_soc_ttf) / (curr_time - config.time_of_last_ttf))
+    config.time_of_last_ttf = curr_time
     ttf = ttf_from_empty * ((100 - config.chargepercent)/100)
-    config.ttf = ttf
+    config.ttf = ttf / 3600
+    config.last_soc_ttf = config.chargepercent
     return ttf 
   
 
