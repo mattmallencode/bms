@@ -13,9 +13,9 @@ charger = Charger(battery, power_brick)
 last_time_discharged = None
 
 config.chargepercent = ((3.0 - config.VOLTAGE_MIN) * 100)/ (config.VOLTAGE_MAX - config.VOLTAGE_MIN)
-config.ttf = 0.12
+config.ttf = 0.53
 phone = Phone(True, True, True, True, 0.01)
-config.tte = 0.1
+config.tte = 0
 
 while True: 
         phone._root.update_idletasks()
@@ -39,5 +39,5 @@ while True:
                 time_till_full(charger)
             if phone.locked and phone.is_charging == False:
                 time_till_empty(phone)
-        print(charger.charge_setting, config.chargepercent)
+        print(charger.charge_setting, config.chargepercent, battery._current, battery._voltage)
         sleep(0.5)

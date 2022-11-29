@@ -6,7 +6,7 @@ VOLTAGE_MIN: float = 3.0
 # If voltage trends towards this value, it leads to degradation.
 VOLTAGE_MAX: float = 4.2
 # Max rate of charge.
-CHARGE_C: float = 1
+CHARGE_C: float = 0.25
 # Max rate of discharge.
 DISCHARGE_C: float = 1
 # The threshold of the current when battery is fully charged
@@ -31,6 +31,8 @@ POWER_BRICK_VOLTAGE: int = 5
 time_since_last_soc_calculation = time()
 time_of_last_ttf: time = time()
 last_soc_ttf: float = chargepercent - 0.01
+time_of_last_tte: time = time()
+last_soc_tte: float = chargepercent + 0.01
 POWERDRAWSCREENOFF = 0.1
 
 POWERDRAWSCREENON = 0.1

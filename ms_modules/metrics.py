@@ -23,10 +23,12 @@ def time_till_empty(phone) -> float:
     """
     Returns the time (in hours) until the battery is fully discharged from its current battery percentage
     """
-    functional_capacity = config.CAPACITY * config.lifespan
-    tte_from_full = (functional_capacity/1000) / phone.power_draw
-    tte = tte_from_full * (config.chargepercent/100)
-    config.tte = tte
+    curr_time = time()
+    tte_from_full = -100 / ((config.chargepercent - config.last_soc_tte) / (curr_time - config.time_of_last_tte))
+    config.time_of_last_tte = curr_time
+    tte = tte_from_full * ((config.chargepercent)/100)
+    config.tte = tte / 3600
+    config.last_soc_tte = config.chargepercent
     return tte
 
 
