@@ -13,7 +13,7 @@ class TestMetricsModule(TestCase):
     battery = Battery(2, 3.6)
     power_brick = PowerBrick(2, 5)
     charger = Charger(battery, power_brick)
-    phone = Phone(False, False, True, False, 5, charger)
+    phone = Phone(False, False, True, False, 5)
 
     def test_time_till_full(self):
         "Method to test the time_till_full() function."
@@ -67,4 +67,4 @@ class TestMetricsModule(TestCase):
         soc = round(soc, 2)
 
         # check if soc value equal to expected result
-        self.assertAlmostEqual(soc, 50.38, 1)
+        self.assertAlmostEqual(soc, 60, 1)

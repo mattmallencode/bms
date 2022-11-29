@@ -27,7 +27,7 @@ class TestChargeModeClass(TestCase):
         # Create a dummy charger.
         charger = Charger(battery, power_brick)
         # Create a dummy phone instance.
-        p = Phone(False, False, True, False, 5.0, charger)
+        p = Phone(False, False, True, False, 5.0)
 
         battery.voltage = config.VOLTAGE_MIN-1
         decide_charge_mode(charger)
@@ -59,11 +59,11 @@ class TestChargeModeClass(TestCase):
         # Create a dummy power brick.
         power_brick = PowerBrick(15, 15)
         # Create a dummy battery.
-        battery = Battery(10, 10, 10, 10)
+        battery = Battery(10, 10)
         # Create a dummy charger.
         charger = Charger(battery, power_brick)
         # Create a dummy phone instance.
-        p = Phone(False, False, True, False, 5.0, charger)
+        p = Phone(False, False, True, False, 5.0)
 
         last_voltage = battery.voltage
         discharge(battery, p, time()-100)        

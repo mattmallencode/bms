@@ -1,5 +1,5 @@
 from unittest import TestCase
-from ms_modules import health
+from ms_modules import metrics
 import config
 
 class TestHealthModule(TestCase):
@@ -10,5 +10,5 @@ class TestHealthModule(TestCase):
 
         We pass a "dif_in_soc" of 50000, as this would equate to 500 charge cycles, which should result in 20% battery degradation i.e. lifespan being reduced to 80%.
         """
-        health.adjust_lifespan(50000)
+        metrics.adjust_lifespan(50000)
         self.assertEqual(config.lifespan, 0.8)

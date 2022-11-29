@@ -60,7 +60,9 @@ def state_of_charge(charger, phone) -> float:
         functional_capacity = config.CAPACITY * config.lifespan
         soc = config.chargepercent + ((i/(functional_capacity / 1000)) * time_step)
         # sets the battery percentage equal to the newly calculated battery percentage
-        config.chargepercent = soc   
+        config.chargepercent = soc 
+    else:
+        soc = config.chargepercent
     return soc
 
 def adjust_lifespan(dif_in_soc: float) -> float:
