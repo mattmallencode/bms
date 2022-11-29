@@ -15,7 +15,6 @@ class TestPowerOn(TestCase):
         p = Phone(False, False, True, False, 5.0)
         p.powered_on = False
 
-        # Do the same as above but for the home button i.e. display on.
         # First we must power the phone on.
         mouse_click = ClickEvent(p._power_button_corners["X1"] + 1, p._power_button_corners["Y1"] + 1)
         p._press(mouse_click)

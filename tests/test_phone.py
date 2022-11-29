@@ -23,7 +23,7 @@ class TestPhoneClass(TestCase):
         # Create a dummy charger.
         charger = Charger(battery, power_brick)
         # Create a dummy phone instance.
-        p = Phone(False, False, True, False, 5.0, charger)
+        p = Phone(False, False, True, False, 5.0)
 
         # Create a dummy mouse click that should be within the bounds of the power on button.
         mouse_click = ClickEvent(p._power_button_corners["X1"] + 1, p._power_button_corners["Y1"] + 1)
