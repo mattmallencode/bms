@@ -18,24 +18,25 @@ class TestMetricsModule(TestCase):
     def test_time_till_full(self):
         "Method to test the time_till_full() function."
         # instantiate variables
-        config.chargepercent = 60
-        config.CAPACITY = 2600
-        config.lifespan = 1
-        
-        #calculate ttf and check if it is equal to the expected result
-        ttf = time_till_full(self.charger)
-        self.assertAlmostEqual(ttf, 0.52)
+        # instantiate variables
+        config.chargepercent = 50
+        config.last_soc_ttf = 49
+        config.time_of_last_ttf = time()
+        sleep(1)
+        #calculate tte and check if it is equal to the expected result
+        ttf = time_till_full(self.phone)
+        self.assertTrue(ttf > 49 and ttf < 51)
 
     def test_time_till_empty(self):
         "Method to test the time_till_empty() function."
         # instantiate variables
-        config.chargepercent = 60
-        config.CAPACITY = 2600
-        config.lifespan = 1
-        
+        config.chargepercent = 99
+        config.last_soc_tte = 100
+        config.time_of_last_tte = time()
+        sleep(1)
         #calculate tte and check if it is equal to the expected result
         tte = time_till_empty(self.phone)
-        self.assertEqual(tte, 0.312)
+        self.assertTrue(tte > 98 and tte < 100)
 
     def test_state_of_charge(self):
         "Method to test the state_of_charge() function."
