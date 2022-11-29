@@ -82,7 +82,7 @@ class Charger:
         self._time_of_last_charge = time()
         # print(time_in_constant_voltage)
         # provide the constant voltage
-        self._battery.voltage = config.VOLTAGE_MAX
+        #self._battery.voltage = config.VOLTAGE_MAX
         # Apply the current formula for constant voltage
         capacityPercentage = (config.CAPACITY/100) * \
             (100-config.THRESHHOLDPRECENTAGE)

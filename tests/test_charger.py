@@ -56,6 +56,6 @@ class TestChargingModule(TestCase):
         sleep(1)
         charger.charge_battery()
         # Constant voltage 
-        self.assertGreater(battery.voltage, last_voltage)
+        self.assertEqual(battery.voltage, last_voltage)
         # Constant voltage  current 
         self.assertLess(battery.current, initial_current)
