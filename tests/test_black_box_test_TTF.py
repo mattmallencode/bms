@@ -21,6 +21,10 @@ class TestTimeTillFull(TestCase):
         p._press(mouse_click)
         # The phone's powered_on state should now be true.
         self.assertEqual(p.powered_on, True)
+        # plug in the phone 
+        mouse_click = ClickEvent(p._connector_corners["X1"] + 1, p._connector_corners["Y1"] + 1)
+        p._press(mouse_click)
+        self.assertEqual(p.is_charging, True)
         # Do the same as above but for the home button i.e. display on.
         # then hit te home button to turn the screen on The time till full should be visible.
         mouse_click = ClickEvent(p._home_button_corners["X1"] + 1, p._home_button_corners["Y1"] + 1)
