@@ -1,5 +1,6 @@
 import tkinter
 import config
+from time import sleep
 
 """ use properties dont change self.X """
 
@@ -225,6 +226,7 @@ class Phone:
         min = hours - int(hours)
         min = int(min * 60)
         hoursMin = f"{int(hours)} hours and {min} minutes"
+        sleep(0.5)
         return hoursMin
 
     """ Getters / Setters ------------------------------------------------------------------------ """

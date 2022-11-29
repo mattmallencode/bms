@@ -40,4 +40,3 @@ while True:
             if phone.locked and phone.is_charging == False:
                 time_till_empty(phone)
         print(charger.charge_setting, config.chargepercent, battery._current, battery._voltage)
-        sleep(0.5)
